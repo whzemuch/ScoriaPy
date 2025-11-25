@@ -1,0 +1,15 @@
+README.md
+pyproject.toml
+src/scoriapy/__init__.py
+src/scoriapy.egg-info/PKG-INFO
+src/scoriapy.egg-info/SOURCES.txt
+src/scoriapy.egg-info/dependency_links.txt
+src/scoriapy.egg-info/requires.txt
+src/scoriapy.egg-info/top_level.txt
+src/scoriapy/pl/__init__.py
+src/scoriapy/pp/__init__.py
+src/scoriapy/pp/hvg.py
+src/scoriapy/tl/__init__.py
+src/scoriapy/utils/__init__.py
+src/scoriapy/utils/loggin.py
+src/scoriapy/utils/markers.py

@@ -1,0 +1,18 @@
+[project]
+name = "scoriapy"
+version = "0.1.0"
+description = "Convenience utilities built on top of Scanpy."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Hanzhou Wang" }]
+
+dependencies = [
+    "scanpy",
+    "anndata",
+    "numpy",
+    "pandas",
+    "matplotlib",
+    "seaborn",
+]
+
+

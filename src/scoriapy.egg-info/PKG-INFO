@@ -1,0 +1,13 @@
+Metadata-Version: 2.4
+Name: scoriapy
+Version: 0.1.0
+Summary: Convenience utilities built on top of Scanpy.
+Author: Hanzhou Wang
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: scanpy
+Requires-Dist: anndata
+Requires-Dist: numpy
+Requires-Dist: pandas
+Requires-Dist: matplotlib
+Requires-Dist: seaborn
