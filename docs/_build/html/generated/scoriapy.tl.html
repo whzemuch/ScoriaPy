@@ -1,0 +1,410 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>scoriapy.tl &mdash; ScoriaPy 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ScoriaPy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ScoriaPy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">scoriapy.tl</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/generated/scoriapy.tl.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-scoriapy.tl">
+<span id="scoriapy-tl"></span><h1>scoriapy.tl<a class="headerlink" href="#module-scoriapy.tl" title="Link to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.tl.aggregate_group_expression">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.tl.</span></span><span class="sig-name descname"><span class="pre">aggregate_group_expression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.tl.aggregate_group_expression" title="Link to this definition"></a></dt>
+<dd><p>Aggregate gene expression for a specific group.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – AnnData object with expression data.</p></li>
+<li><p><strong>group_mask</strong> – Index or boolean mask selecting cells belonging to the group.</p></li>
+<li><p><strong>group_name</strong> (<em>str</em>) – Name to use for the aggregated pseudo-bulk sample.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Single-column DataFrame indexed by gene names.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.tl.aggregate_single_cell_data">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.tl.</span></span><span class="sig-name descname"><span class="pre">aggregate_single_cell_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_cols</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.tl.aggregate_single_cell_data" title="Link to this definition"></a></dt>
+<dd><p>Aggregate single-cell expression data by the given group columns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – AnnData object with expression data.</p></li>
+<li><p><strong>group_cols</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – List of <code class="docutils literal notranslate"><span class="pre">obs</span></code> columns to group by (e.g. <code class="docutils literal notranslate"><span class="pre">[&quot;sample&quot;,</span> <span class="pre">&quot;cell_type&quot;]</span></code>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Pseudo-bulk expression matrix with groups as columns.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.tl.check_group_columns_exist">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.tl.</span></span><span class="sig-name descname"><span class="pre">check_group_columns_exist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_cols</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.tl.check_group_columns_exist" title="Link to this definition"></a></dt>
+<dd><p>Ensure that all requested grouping columns exist in <code class="docutils literal notranslate"><span class="pre">adata.obs</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – AnnData object whose <code class="docutils literal notranslate"><span class="pre">obs</span></code> will be checked.</p></li>
+<li><p><strong>group_cols</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – List of column names that must be present in <code class="docutils literal notranslate"><span class="pre">adata.obs</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If any of the requested columns are missing.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.tl.combine_group_values">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.tl.</span></span><span class="sig-name descname"><span class="pre">combine_group_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group_values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.tl.combine_group_values" title="Link to this definition"></a></dt>
+<dd><p>Combine group column values into a single string, separated by underscores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>group_values</strong> – Iterable of values describing a group.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Combined group name.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.tl.compare_cluster_phase">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.tl.</span></span><span class="sig-name descname"><span class="pre">compare_cluster_phase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cross_table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'age'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.tl.compare_cluster_phase" title="Link to this definition"></a></dt>
+<dd><p>Apply a Kruskal-Wallis test to each phase for a given cluster.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cross_table</strong> (<em>DataFrame</em>) – Cross-tabulated table (e.g. from <code class="xref py py-func docutils literal notranslate"><span class="pre">pandas.crosstab()</span></code>) whose index
+includes the cluster identifier.</p></li>
+<li><p><strong>cluster_id</strong> (<em>str</em>) – Specific cluster label to analyze.</p></li>
+<li><p><strong>level</strong> (<em>int</em>) – Level of the index in <code class="docutils literal notranslate"><span class="pre">cross_table</span></code> corresponding to <code class="docutils literal notranslate"><span class="pre">cluster_id</span></code>.</p></li>
+<li><p><strong>group_level</strong> (<em>str</em>) – Index level used to define groups for the test (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;age&quot;</span></code>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Mapping from phase (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;G1&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;G2M&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;S&quot;</span></code>) to
+Kruskal-Wallis test results.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.tl.compare_gene_expression">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.tl.</span></span><span class="sig-name descname"><span class="pre">compare_gene_expression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clustering_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groupby_col</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.tl.compare_gene_expression" title="Link to this definition"></a></dt>
+<dd><p>Compare expression of a single gene across multiple groups with Kruskal-Wallis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> (<em>AnnData</em>) – AnnData object with expression data.</p></li>
+<li><p><strong>clustering_key</strong> (<em>str</em>) – Column in <code class="docutils literal notranslate"><span class="pre">adata.obs</span></code> used to subset to specific clusters.</p></li>
+<li><p><strong>cluster_ids</strong> – One or more cluster identifiers to include.</p></li>
+<li><p><strong>gene</strong> (<em>str</em>) – Gene name to test.</p></li>
+<li><p><strong>groupby_col</strong> (<em>str</em>) – Column in <code class="docutils literal notranslate"><span class="pre">adata.obs</span></code> defining the groups to compare.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dunn’s test results as a DataFrame if the global test is significant,
+otherwise <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.tl.compare_gene_expression_two">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.tl.</span></span><span class="sig-name descname"><span class="pre">compare_gene_expression_two</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clustering_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groupby_col</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.tl.compare_gene_expression_two" title="Link to this definition"></a></dt>
+<dd><p>Compare expression of a single gene between exactly two groups using Mann-Whitney U.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> (<em>AnnData</em>) – AnnData object with expression data.</p></li>
+<li><p><strong>clustering_key</strong> (<em>str</em>) – Column in <code class="docutils literal notranslate"><span class="pre">adata.obs</span></code> used to subset to specific clusters.</p></li>
+<li><p><strong>cluster_ids</strong> – One or more cluster identifiers to include.</p></li>
+<li><p><strong>gene</strong> (<em>str</em>) – Gene name to test.</p></li>
+<li><p><strong>groupby_col</strong> (<em>str</em>) – Column in <code class="docutils literal notranslate"><span class="pre">adata.obs</span></code> defining the two groups being compared.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with keys <code class="docutils literal notranslate"><span class="pre">&quot;gene&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;statistic&quot;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&quot;p_value&quot;</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.tl.create_group_dicts">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.tl.</span></span><span class="sig-name descname"><span class="pre">create_group_dicts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_cols</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.tl.create_group_dicts" title="Link to this definition"></a></dt>
+<dd><p>Create a list of dictionaries defining groups based on specified columns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – AnnData object whose <code class="docutils literal notranslate"><span class="pre">obs</span></code> is used to define groups.</p></li>
+<li><p><strong>group_cols</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – List of column names to group by.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of dictionaries describing each group combination.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.tl.detect_gene_flips">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.tl.</span></span><span class="sig-name descname"><span class="pre">detect_gene_flips</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">one_down</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">one_up</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">two_down</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">two_up</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_df</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.tl.detect_gene_flips" title="Link to this definition"></a></dt>
+<dd><p>Identify genes that flip direction between two conditions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>one_down</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Gene lists for the two conditions.</p></li>
+<li><p><strong>one_up</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Gene lists for the two conditions.</p></li>
+<li><p><strong>two_down</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Gene lists for the two conditions.</p></li>
+<li><p><strong>two_up</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Gene lists for the two conditions.</p></li>
+<li><p><strong>return_df</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, return a DataFrame, otherwise a dict.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.tl.get_de_genes">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.tl.</span></span><span class="sig-name descname"><span class="pre">get_de_genes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'age'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rank_genes_groups'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.tl.get_de_genes" title="Link to this definition"></a></dt>
+<dd><p>Extract sets of differentially expressed genes for each group.</p>
+<p>Assumes that differential expression results are already present in
+<code class="docutils literal notranslate"><span class="pre">adata.uns[key]</span></code> as created by <code class="xref py py-func docutils literal notranslate"><span class="pre">scanpy.tl.rank_genes_groups()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> (<em>AnnData</em>) – AnnData object with DE results.</p></li>
+<li><p><strong>group_col</strong> (<em>str</em>) – Column in <code class="docutils literal notranslate"><span class="pre">adata.obs</span></code> that defines the groups.</p></li>
+<li><p><strong>key</strong> (<em>str</em>) – Key under which DE results are stored in <code class="docutils literal notranslate"><span class="pre">adata.uns</span></code>.</p></li>
+<li><p><strong>query</strong> (<em>str</em><em> | </em><em>None</em>) – Optional pandas query string to filter the DE table for each group.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Mapping from group label to a set of gene names.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.tl.get_deg_df">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.tl.</span></span><span class="sig-name descname"><span class="pre">get_deg_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groupby_attribute</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.tl.get_deg_df" title="Link to this definition"></a></dt>
+<dd><p>Compute a DEG table for a given query and return expression for selected genes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> (<em>AnnData</em>) – AnnData object with expression data.</p></li>
+<li><p><strong>cluster_key</strong> (<em>str</em>) – Column in <code class="docutils literal notranslate"><span class="pre">adata.obs</span></code> indicating clusters (currently not used in
+the implementation but kept for API compatibility).</p></li>
+<li><p><strong>groupby_attribute</strong> (<em>str</em>) – Column in <code class="docutils literal notranslate"><span class="pre">adata.obs</span></code> used for grouping in DE analysis.</p></li>
+<li><p><strong>rank_key</strong> (<em>str</em>) – Key under which to store DE results in <code class="docutils literal notranslate"><span class="pre">adata.uns</span></code>.</p></li>
+<li><p><strong>query</strong> (<em>str</em>) – Pandas query string used to filter the DE table.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>test_df</em> – Expression matrix (genes x cells) for the selected genes.</p></li>
+<li><p><em>filter_df</em> – DataFrame with statistics for the selected genes.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Tuple</em>[<em>DataFrame</em>, <em>DataFrame</em>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.tl.get_pairwise_deg">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.tl.</span></span><span class="sig-name descname"><span class="pre">get_pairwise_deg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comparisons</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groupby_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'group'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'wilcoxon'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.tl.get_pairwise_deg" title="Link to this definition"></a></dt>
+<dd><p>Perform pairwise differential expression analysis for specified comparisons.</p>
+<p>This is a convenience wrapper around <code class="xref py py-func docutils literal notranslate"><span class="pre">scanpy.tl.rank_genes_groups()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> (<em>AnnData</em>) – AnnData object with expression data.</p></li>
+<li><p><strong>comparisons</strong> (<em>Iterable</em><em>[</em><em>Tuple</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em><em>]</em>) – Iterable of pairs <code class="docutils literal notranslate"><span class="pre">(group1,</span> <span class="pre">group2)</span></code> to compare.</p></li>
+<li><p><strong>groupby_col</strong> (<em>str</em>) – Column in <code class="docutils literal notranslate"><span class="pre">adata.obs</span></code> used for grouping.</p></li>
+<li><p><strong>method</strong> (<em>str</em>) – Differential expression method passed to Scanpy (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;wilcoxon&quot;</span></code>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Mapping from comparison label (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;A_vs_B&quot;</span></code>) to a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> of DE statistics.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.tl.run_rank_genes_groups">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.tl.</span></span><span class="sig-name descname"><span class="pre">run_rank_genes_groups</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groupby_attribute</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.tl.run_rank_genes_groups" title="Link to this definition"></a></dt>
+<dd><p>Run <code class="xref py py-func docutils literal notranslate"><span class="pre">scanpy.tl.rank_genes_groups()</span></code> and plot the result.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> (<em>AnnData</em>) – AnnData object with expression data.</p></li>
+<li><p><strong>groupby_attribute</strong> (<em>str</em>) – Column in <code class="docutils literal notranslate"><span class="pre">adata.obs</span></code> used to define groups.</p></li>
+<li><p><strong>rank_key</strong> (<em>str</em><em> | </em><em>None</em>) – Optional key under which to store results in <code class="docutils literal notranslate"><span class="pre">adata.uns</span></code>. If
+<code class="docutils literal notranslate"><span class="pre">None</span></code>, defaults to <code class="docutils literal notranslate"><span class="pre">f&quot;{groupby_attribute}_rank&quot;</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.tl.summarize_category_distribution">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.tl.</span></span><span class="sig-name descname"><span class="pre">summarize_category_distribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">category_col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected_groups</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.tl.summarize_category_distribution" title="Link to this definition"></a></dt>
+<dd><p>Summarize the distribution of a categorical variable across groups.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – AnnData object containing the relevant categorical data in <code class="docutils literal notranslate"><span class="pre">obs</span></code>.</p></li>
+<li><p><strong>category_col</strong> (<em>str</em>) – Name of the column in <code class="docutils literal notranslate"><span class="pre">obs</span></code> whose distribution is summarized.</p></li>
+<li><p><strong>group_col</strong> – Column name or list of column names in <code class="docutils literal notranslate"><span class="pre">obs</span></code> defining groups.</p></li>
+<li><p><strong>selected_groups</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>) – Optional list of column-prefixes to keep (e.g. <code class="docutils literal notranslate"><span class="pre">[&quot;Y&quot;,</span> <span class="pre">&quot;M&quot;,</span> <span class="pre">&quot;O&quot;]</span></code>).</p></li>
+<li><p><strong>normalize</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, express counts as percentages per column and add a
+<code class="docutils literal notranslate"><span class="pre">&quot;Total&quot;</span></code> row.</p></li>
+<li><p><strong>sort_order</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>) – Optional list defining the ordering of group prefixes.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>When <code class="docutils literal notranslate"><span class="pre">normalize</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code>, returns a styled percentage table;
+otherwise a styled count table with an extra <code class="docutils literal notranslate"><span class="pre">&quot;Total&quot;</span></code> column.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.io.formats.style.Styler or pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, ScoriaPy contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

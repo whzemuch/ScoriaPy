@@ -1,0 +1,392 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>scoriapy.utils &mdash; ScoriaPy 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=7026087e"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ScoriaPy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ScoriaPy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">scoriapy.utils</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/generated/scoriapy.utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-scoriapy.utils">
+<span id="scoriapy-utils"></span><h1>scoriapy.utils<a class="headerlink" href="#module-scoriapy.utils" title="Link to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.utils.confirm_and_set_colors">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.utils.</span></span><span class="sig-name descname"><span class="pre">confirm_and_set_colors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_attribute</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_map</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.utils.confirm_and_set_colors" title="Link to this definition"></a></dt>
+<dd><p>Interactively confirm and apply a color map for a categorical obs column.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – AnnData object.</p></li>
+<li><p><strong>color_attribute</strong> (<em>str</em>) – Column in <code class="docutils literal notranslate"><span class="pre">adata.obs</span></code> used for coloring.</p></li>
+<li><p><strong>color_map</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em>) – Mapping from category to color code.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.utils.create_cell_mask">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.utils.</span></span><span class="sig-name descname"><span class="pre">create_cell_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conditions</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.utils.create_cell_mask" title="Link to this definition"></a></dt>
+<dd><p>Create a boolean mask for cells based on multiple flexible conditions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> (<em>AnnData</em>) – The AnnData object.</p></li>
+<li><p><strong>conditions</strong> (<em>dict</em>) – <p>A mapping of <code class="docutils literal notranslate"><span class="pre">obs</span></code> column name to a condition. The condition can be:</p>
+<ul>
+<li><p>a single value (<code class="docutils literal notranslate"><span class="pre">str</span></code>, <code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>a list/tuple/array/Series of allowed values</p></li>
+<li><p>a callable that takes a Series and returns a boolean Series</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Boolean mask over observations.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.utils.display_colors">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.utils.</span></span><span class="sig-name descname"><span class="pre">display_colors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color_list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.utils.display_colors" title="Link to this definition"></a></dt>
+<dd><p>Display colors as inline blocks in a notebook.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>color_list</strong> – Iterable of color specifications (e.g. hex strings) to display.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.utils.display_colors_with_keys">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.utils.</span></span><span class="sig-name descname"><span class="pre">display_colors_with_keys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color_map</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.utils.display_colors_with_keys" title="Link to this definition"></a></dt>
+<dd><p>Display a mapping of keys to colors as inline blocks in a notebook.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>color_map</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em>) – Mapping from label to color code to visualize.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.utils.extract_cell_cluster">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.utils.</span></span><span class="sig-name descname"><span class="pre">extract_cell_cluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_obs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keys</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.utils.extract_cell_cluster" title="Link to this definition"></a></dt>
+<dd><p>Extract a subset of cells from an AnnData object based on values in <code class="docutils literal notranslate"><span class="pre">.obs</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> (<em>AnnData</em>) – AnnData object.</p></li>
+<li><p><strong>col_obs</strong> (<em>str</em>) – Column in <code class="docutils literal notranslate"><span class="pre">adata.obs</span></code> used for filtering.</p></li>
+<li><p><strong>keys</strong> – Single key or list of keys to keep.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Subsetted AnnData or <code class="docutils literal notranslate"><span class="pre">None</span></code> if no cells match.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>AnnData or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.utils.get_full_df">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.utils.</span></span><span class="sig-name descname"><span class="pre">get_full_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.utils.get_full_df" title="Link to this definition"></a></dt>
+<dd><p>Extract expression data from <code class="docutils literal notranslate"><span class="pre">adata.raw</span></code> and optionally z-score scale it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> (<em>AnnData</em>) – AnnData object.</p></li>
+<li><p><strong>keys</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>) – Variable names to extract. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, all variables are used.</p></li>
+<li><p><strong>scale</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, apply z-score column-wise.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Expression matrix (optionally scaled).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.utils.get_mat_df">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.utils.</span></span><span class="sig-name descname"><span class="pre">get_mat_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_raw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.utils.get_mat_df" title="Link to this definition"></a></dt>
+<dd><p>Extract expression data as a DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> (<em>AnnData</em>) – AnnData object.</p></li>
+<li><p><strong>keys</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>) – Variable names to extract. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, all variables are used.</p></li>
+<li><p><strong>use_raw</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, use <code class="docutils literal notranslate"><span class="pre">adata.raw</span></code>; otherwise use <code class="docutils literal notranslate"><span class="pre">adata.X</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Expression matrix with observations as rows.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.utils.make_annotation_df">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.utils.</span></span><span class="sig-name descname"><span class="pre">make_annotation_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata_dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.utils.make_annotation_df" title="Link to this definition"></a></dt>
+<dd><p>Combine metadata from multiple AnnData objects into a single DataFrame.</p>
+<p>Currently expects keys <code class="docutils literal notranslate"><span class="pre">&quot;age&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;rapa&quot;</span></code> and normalizes the
+column name to <code class="docutils literal notranslate"><span class="pre">&quot;group&quot;</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>adata_dict</strong> (<em>dict</em>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>DataFrame</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.utils.make_mat_dfs">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.utils.</span></span><span class="sig-name descname"><span class="pre">make_mat_dfs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">common_genes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.utils.make_mat_dfs" title="Link to this definition"></a></dt>
+<dd><p>Extract scaled expression matrices for a list of common genes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata_dict</strong> (<em>dict</em>) – Mapping of dataset name to AnnData.</p></li>
+<li><p><strong>common_genes</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Genes to extract.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Mapping from dataset name to a transposed expression DataFrame.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.utils.map_colors">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.utils.</span></span><span class="sig-name descname"><span class="pre">map_colors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mapping_dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.utils.map_colors" title="Link to this definition"></a></dt>
+<dd><p>Map colors from a reference dictionary to a target dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>reference_dict</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em>) – Mapping from reference category to color (e.g. cluster ID → hex code).</p></li>
+<li><p><strong>target_dict</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em>) – Mapping whose keys define the target categories to color.
+Existing values are ignored; only the keys are used.</p></li>
+<li><p><strong>mapping_dict</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Iterable</em><em>[</em><em>str</em><em>]</em><em>]</em>) – Mapping from reference keys to iterable(s) of target keys. Each
+target key inherits the color of its reference key.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New mapping from target keys to colors. Keys not specified in
+<code class="docutils literal notranslate"><span class="pre">mapping_dict</span></code> are assigned gray (<code class="docutils literal notranslate"><span class="pre">&quot;#808080&quot;</span></code>).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.utils.scale_df">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.utils.</span></span><span class="sig-name descname"><span class="pre">scale_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.utils.scale_df" title="Link to this definition"></a></dt>
+<dd><p>Apply z-score normalization to each column of a DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>df</strong> (<em>DataFrame</em>) – Input DataFrame.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame with standardized columns (mean=0, std=1).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.utils.setup_logger">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.utils.</span></span><span class="sig-name descname"><span class="pre">setup_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.utils.setup_logger" title="Link to this definition"></a></dt>
+<dd><p>Create and configure the shared <code class="docutils literal notranslate"><span class="pre">&quot;scoriapy&quot;</span></code> logger.</p>
+<p>The logger is configured only once; subsequent calls reuse the same
+instance without adding duplicate handlers. By default, log messages are
+written to <code class="docutils literal notranslate"><span class="pre">stderr</span></code>; if <code class="docutils literal notranslate"><span class="pre">log_file</span></code> is provided, they are also written
+to a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>log_file</strong> (<em>str</em><em> | </em><em>None</em>) – Optional path to a log file. If given, a <code class="docutils literal notranslate"><span class="pre">FileHandler</span></code> is added in
+addition to the standard stream handler.</p></li>
+<li><p><strong>level</strong> – Logging level to use (e.g. <code class="docutils literal notranslate"><span class="pre">logging.INFO</span></code>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Configured logger instance named <code class="docutils literal notranslate"><span class="pre">&quot;scoriapy&quot;</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>logging.Logger</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.utils.subset_adata_by_mask">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.utils.</span></span><span class="sig-name descname"><span class="pre">subset_adata_by_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_raw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.utils.subset_adata_by_mask" title="Link to this definition"></a></dt>
+<dd><p>Subset an AnnData object using a cell mask and gene list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> (<em>AnnData</em>) – The original AnnData object.</p></li>
+<li><p><strong>cell_mask</strong> (<em>ndarray</em>) – Boolean mask for selecting cells.</p></li>
+<li><p><strong>gene_list</strong> (<em>list</em>) – Genes to keep.</p></li>
+<li><p><strong>use_raw</strong> (<em>bool</em>) – Whether to use <code class="docutils literal notranslate"><span class="pre">adata.raw</span></code> for gene subsetting.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A new subsetted AnnData object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>AnnData</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.utils.subset_by_markers">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.utils.</span></span><span class="sig-name descname"><span class="pre">subset_by_markers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">markers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'any'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">require_n_markers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_raw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_obs_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.utils.subset_by_markers" title="Link to this definition"></a></dt>
+<dd><p>Subset cells based on expression of a set of marker genes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – AnnData object containing the expression matrix.</p></li>
+<li><p><strong>markers</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – List of marker gene names. Genes not found in <code class="docutils literal notranslate"><span class="pre">adata.var_names</span></code> are
+silently ignored.</p></li>
+<li><p><strong>strategy</strong> (<em>Literal</em><em>[</em><em>'any'</em><em>, </em><em>'all'</em><em>, </em><em>'count'</em><em>, </em><em>'threshold'</em><em>]</em>) – <p>Strategy used to define positive cells:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;any&quot;</span></code> – keep cells expressing <em>any</em> marker above <code class="docutils literal notranslate"><span class="pre">threshold</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;all&quot;</span></code> – keep cells expressing <em>all</em> markers above <code class="docutils literal notranslate"><span class="pre">threshold</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;count&quot;</span></code> – keep cells with at least <code class="docutils literal notranslate"><span class="pre">min_count</span></code> markers above
+<code class="docutils literal notranslate"><span class="pre">threshold</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;threshold&quot;</span></code> – keep cells whose <strong>mean</strong> marker expression
+exceeds <code class="docutils literal notranslate"><span class="pre">threshold</span></code>.</p></li>
+</ul>
+</p></li>
+<li><p><strong>threshold</strong> (<em>float</em>) – Expression cutoff to consider a marker as expressed.</p></li>
+<li><p><strong>require_n_markers</strong> (<em>int</em>) – Minimum number of markers required to be present in
+<code class="docutils literal notranslate"><span class="pre">adata.var_names</span></code>. Currently this is advisory only and does not alter
+behaviour, but can be used by callers for validation.</p></li>
+<li><p><strong>min_count</strong> (<em>int</em>) – Minimum number of expressed markers when <code class="docutils literal notranslate"><span class="pre">strategy='count'</span></code>.</p></li>
+<li><p><strong>use_raw</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">adata.raw</span></code> is present, use <code class="docutils literal notranslate"><span class="pre">adata.raw.X</span></code> instead
+of <code class="docutils literal notranslate"><span class="pre">adata.X</span></code>.</p></li>
+<li><p><strong>add_obs_key</strong> (<em>str</em><em> | </em><em>None</em>) – Optional name of an <code class="docutils literal notranslate"><span class="pre">obs</span></code> column to store the boolean mask.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Copy of <code class="docutils literal notranslate"><span class="pre">adata</span></code> restricted to cells that satisfy the marker rule.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>AnnData</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, ScoriaPy contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
