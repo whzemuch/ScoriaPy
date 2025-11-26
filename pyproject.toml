@@ -16,20 +16,20 @@ dependencies = [
     "jupyterlab>=4.5.0",
     "pycomplexheatmap>=1.8.3",
     "scikit-posthocs>=0.11.4",
-    "pytest>=9.0.1",
+    "pytest>=9.0.1"
 ]
 
 [project.optional-dependencies]
 dev = [
-    "black>=24.0.0",
+    "black>=24.0.0"
 ]
-
-[tool.black]
-line-length = 88
-target-version = ["py310"]
 
 [tool.setuptools]
 include-package-data = true  # optional
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.black]
+line-length = 88
+target-version = ["py310"]
