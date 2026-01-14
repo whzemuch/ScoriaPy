@@ -3,7 +3,7 @@ import scanpy as sc
 
 def add_ncells_annotation(
     loc=(0.98, 0.02),
-    fontsize=9,i
+    fontsize=9,
     color="black",
     bbox=True
 ):

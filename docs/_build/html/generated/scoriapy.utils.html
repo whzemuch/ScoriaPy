@@ -6,16 +6,16 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>scoriapy.utils &mdash; ScoriaPy 0.0.0 documentation</title>
+  <title>scoriapy.utils package &mdash; ScoriaPy 0.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../_static/documentation_options.js?v=7026087e"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
@@ -58,7 +58,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">scoriapy.utils</li>
+      <li class="breadcrumb-item active">scoriapy.utils package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/generated/scoriapy.utils.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -68,8 +68,204 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-scoriapy.utils">
-<span id="scoriapy-utils"></span><h1>scoriapy.utils<a class="headerlink" href="#module-scoriapy.utils" title="Link to this heading"></a></h1>
+  <section id="scoriapy-utils-package">
+<h1>scoriapy.utils package<a class="headerlink" href="#scoriapy-utils-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-scoriapy.utils.logging">
+<span id="scoriapy-utils-logging-module"></span><h2>scoriapy.utils.logging module<a class="headerlink" href="#module-scoriapy.utils.logging" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.utils.logging.setup_logger">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.utils.logging.</span></span><span class="sig-name descname"><span class="pre">setup_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.utils.logging.setup_logger" title="Link to this definition"></a></dt>
+<dd><p>Create and configure a logger for Scanpy processing pipelines.</p>
+<p>This logger:
+- prints messages to the console with timestamps
+- optionally writes logs to a file
+- avoids duplicate handlers (important in Jupyter notebooks)
+- supports adjustable log levels (INFO, DEBUG, WARNING, etc.)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>log_file</strong> (<em>str</em><em> or </em><em>None</em><em>, </em><em>optional</em><em> (</em><em>default: None</em><em>)</em>) – If provided, log messages are also written to this file.
+If None, only console output is produced.</p></li>
+<li><p><strong>level</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>default: logging.INFO</em><em>)</em>) – Logging verbosity level. Typically one of:
+- logging.DEBUG
+- logging.INFO
+- logging.WARNING
+- logging.ERROR
+- logging.CRITICAL</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>logger</strong> – A configured logger instance that can be passed to functions
+(e.g., preprocessing pipelines) to produce timestamped logs.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>logging.Logger</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Inside Jupyter notebooks, calling this function repeatedly will not
+produce duplicate log messages because the logger only adds handlers
+the first time it is constructed.</p>
+<p class="rubric">Examples</p>
+<p>Basic usage:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span> <span class="o">=</span> <span class="n">setup_logger</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting preprocessing...&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Logging to both console and file:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span> <span class="o">=</span> <span class="n">setup_logger</span><span class="p">(</span><span class="s2">&quot;scanpy_run.log&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Running HVG selection...&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Using inside a Scanpy pipeline:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span> <span class="o">=</span> <span class="n">setup_logger</span><span class="p">(</span><span class="s2">&quot;fibro_preprocess.log&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">adata</span> <span class="o">=</span> <span class="n">run_scanpy_basic_pipeline</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="n">logger</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Pipeline finished.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Changing verbosity:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span> <span class="o">=</span> <span class="n">setup_logger</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Debug-level message for troubleshooting.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-scoriapy.utils.markers">
+<span id="scoriapy-utils-markers-module"></span><h2>scoriapy.utils.markers module<a class="headerlink" href="#module-scoriapy.utils.markers" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.utils.markers.subset_by_markers">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.utils.markers.</span></span><span class="sig-name descname"><span class="pre">subset_by_markers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">markers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'any'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">require_n_markers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_raw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_obs_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.utils.markers.subset_by_markers" title="Link to this definition"></a></dt>
+<dd><p>Subset cells based on expression of a set of marker genes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – AnnData object containing the expression matrix.</p></li>
+<li><p><strong>markers</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – List of marker gene names. Genes not found in <code class="docutils literal notranslate"><span class="pre">adata.var_names</span></code> are
+silently ignored.</p></li>
+<li><p><strong>strategy</strong> (<em>Literal</em><em>[</em><em>'any'</em><em>, </em><em>'all'</em><em>, </em><em>'count'</em><em>, </em><em>'threshold'</em><em>]</em>) – <p>Strategy used to define positive cells:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;any&quot;</span></code> – keep cells expressing <em>any</em> marker above <code class="docutils literal notranslate"><span class="pre">threshold</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;all&quot;</span></code> – keep cells expressing <em>all</em> markers above <code class="docutils literal notranslate"><span class="pre">threshold</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;count&quot;</span></code> – keep cells with at least <code class="docutils literal notranslate"><span class="pre">min_count</span></code> markers above
+<code class="docutils literal notranslate"><span class="pre">threshold</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;threshold&quot;</span></code> – keep cells whose <strong>mean</strong> marker expression
+exceeds <code class="docutils literal notranslate"><span class="pre">threshold</span></code>.</p></li>
+</ul>
+</p></li>
+<li><p><strong>threshold</strong> (<em>float</em>) – Expression cutoff to consider a marker as expressed.</p></li>
+<li><p><strong>require_n_markers</strong> (<em>int</em>) – Minimum number of markers required to be present in
+<code class="docutils literal notranslate"><span class="pre">adata.var_names</span></code>. Currently this is advisory only and does not alter
+behaviour, but can be used by callers for validation.</p></li>
+<li><p><strong>min_count</strong> (<em>int</em>) – Minimum number of expressed markers when <code class="docutils literal notranslate"><span class="pre">strategy='count'</span></code>.</p></li>
+<li><p><strong>use_raw</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">adata.raw</span></code> is present, use <code class="docutils literal notranslate"><span class="pre">adata.raw.X</span></code> instead
+of <code class="docutils literal notranslate"><span class="pre">adata.X</span></code>.</p></li>
+<li><p><strong>add_obs_key</strong> (<em>str</em><em> | </em><em>None</em>) – Optional name of an <code class="docutils literal notranslate"><span class="pre">obs</span></code> column to store the boolean mask.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Copy of <code class="docutils literal notranslate"><span class="pre">adata</span></code> restricted to cells that satisfy the marker rule.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>AnnData</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-scoriapy.utils">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-scoriapy.utils" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="scoriapy.utils.FigureRegistry">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">scoriapy.utils.</span></span><span class="sig-name descname"><span class="pre">FigureRegistry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'figures'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.utils.FigureRegistry" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A lightweight container for managing, annotating, displaying, and batch-saving matplotlib figures in Jupyter workflows.</p>
+<p>Features:
+- Tracks figures by name (and optional tags) with creation timestamps.
+- Batch-saving of all figures (e.g., as PDFs) to a chosen output folder.
+- Convenient <cite>.show()</cite> gallery for Jupyter (with names/tags above each figure).
+- Automatic rasterization of collections to control output file size.
+- Easy repr for auditing what’s stored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>output_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save figures (default “figures”).</p></li>
+<li><p><strong>dpi</strong> (<em>int</em><em>, </em><em>optional</em>) – DPI for figure saving (default 300).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">add(name,</span> <span class="pre">fig=None,</span> <span class="pre">rasterize=True,</span> <span class="pre">tags=None):</span></span></dt>
+<dd><p>Add a figure (current or supplied) to the registry, with optional tags and rasterization.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">save_all(overwrite=True):</span></span></dt>
+<dd><p>Save all registered figures to disk (default: PDF).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">show():</span></span></dt>
+<dd><p>Display all figures in a Jupyter notebook cell
+(with labels and tags).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">list_figures():</span></span></dt>
+<dd><p>List all tracked figure names.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">__repr__():</span></span></dt>
+<dd><p>Pretty print a summary table of tracked figures.</p>
+</dd></dl>
+
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">reg</span> <span class="o">=</span> <span class="n">FigureRegistry</span><span class="p">(</span><span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;myfigs&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Add a figure</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">9</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">reg</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;parabola&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;demo&quot;</span><span class="p">,</span> <span class="s2">&quot;math&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Show all figures in Jupyter</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">reg</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Save all to PDF in &quot;myfigs&quot; directory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">reg</span><span class="o">.</span><span class="n">save_all</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">reg</span><span class="p">)</span>
+<span class="go">Name                      | Tags                 | Created</span>
+<span class="go">----------------------------------------------------------------------</span>
+<span class="go">parabola                  | demo, math           | 2026-01-07 16:24:33</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="scoriapy.utils.FigureRegistry.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rasterize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.utils.FigureRegistry.add" title="Link to this definition"></a></dt>
+<dd><p>Add figure and metadata to container.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="scoriapy.utils.FigureRegistry.save_all">
+<span class="sig-name descname"><span class="pre">save_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.utils.FigureRegistry.save_all" title="Link to this definition"></a></dt>
+<dd><p>Saves all figures as PDFs.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="scoriapy.utils.FigureRegistry.show">
+<span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.utils.FigureRegistry.show" title="Link to this definition"></a></dt>
+<dd><p>Visual gallery for Jupyter: displays every figure with its name and tags.</p>
+</dd></dl>
+
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="scoriapy.utils.confirm_and_set_colors">
 <span class="sig-prename descclassname"><span class="pre">scoriapy.utils.</span></span><span class="sig-name descname"><span class="pre">confirm_and_set_colors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_attribute</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_map</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.utils.confirm_and_set_colors" title="Link to this definition"></a></dt>
@@ -276,26 +472,59 @@ target key inherits the color of its reference key.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="scoriapy.utils.setup_logger">
 <span class="sig-prename descclassname"><span class="pre">scoriapy.utils.</span></span><span class="sig-name descname"><span class="pre">setup_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.utils.setup_logger" title="Link to this definition"></a></dt>
-<dd><p>Create and configure the shared <code class="docutils literal notranslate"><span class="pre">&quot;scoriapy&quot;</span></code> logger.</p>
-<p>The logger is configured only once; subsequent calls reuse the same
-instance without adding duplicate handlers. By default, log messages are
-written to <code class="docutils literal notranslate"><span class="pre">stderr</span></code>; if <code class="docutils literal notranslate"><span class="pre">log_file</span></code> is provided, they are also written
-to a file.</p>
+<dd><p>Create and configure a logger for Scanpy processing pipelines.</p>
+<p>This logger:
+- prints messages to the console with timestamps
+- optionally writes logs to a file
+- avoids duplicate handlers (important in Jupyter notebooks)
+- supports adjustable log levels (INFO, DEBUG, WARNING, etc.)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>log_file</strong> (<em>str</em><em> | </em><em>None</em>) – Optional path to a log file. If given, a <code class="docutils literal notranslate"><span class="pre">FileHandler</span></code> is added in
-addition to the standard stream handler.</p></li>
-<li><p><strong>level</strong> – Logging level to use (e.g. <code class="docutils literal notranslate"><span class="pre">logging.INFO</span></code>).</p></li>
+<li><p><strong>log_file</strong> (<em>str</em><em> or </em><em>None</em><em>, </em><em>optional</em><em> (</em><em>default: None</em><em>)</em>) – If provided, log messages are also written to this file.
+If None, only console output is produced.</p></li>
+<li><p><strong>level</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>default: logging.INFO</em><em>)</em>) – Logging verbosity level. Typically one of:
+- logging.DEBUG
+- logging.INFO
+- logging.WARNING
+- logging.ERROR
+- logging.CRITICAL</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Configured logger instance named <code class="docutils literal notranslate"><span class="pre">&quot;scoriapy&quot;</span></code>.</p>
+<dd class="field-even"><p><strong>logger</strong> – A configured logger instance that can be passed to functions
+(e.g., preprocessing pipelines) to produce timestamped logs.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>logging.Logger</p>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p>Inside Jupyter notebooks, calling this function repeatedly will not
+produce duplicate log messages because the logger only adds handlers
+the first time it is constructed.</p>
+<p class="rubric">Examples</p>
+<p>Basic usage:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span> <span class="o">=</span> <span class="n">setup_logger</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting preprocessing...&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Logging to both console and file:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span> <span class="o">=</span> <span class="n">setup_logger</span><span class="p">(</span><span class="s2">&quot;scanpy_run.log&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Running HVG selection...&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Using inside a Scanpy pipeline:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span> <span class="o">=</span> <span class="n">setup_logger</span><span class="p">(</span><span class="s2">&quot;fibro_preprocess.log&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">adata</span> <span class="o">=</span> <span class="n">run_scanpy_basic_pipeline</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="n">logger</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Pipeline finished.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Changing verbosity:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span> <span class="o">=</span> <span class="n">setup_logger</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Debug-level message for troubleshooting.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
@@ -360,6 +589,7 @@ of <code class="docutils literal notranslate"><span class="pre">adata.X</span></
 </dd></dl>
 
 </section>
+</section>
 
 
            </div>
@@ -369,7 +599,7 @@ of <code class="docutils literal notranslate"><span class="pre">adata.X</span></
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2025, ScoriaPy contributors.</p>
+    <p>&#169; Copyright 2026, ScoriaPy contributors.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

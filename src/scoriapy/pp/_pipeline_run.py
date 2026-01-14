@@ -1,5 +1,43 @@
 import scanpy as sc
-from ..utils.logging import setup_logger
+
+
+def preprocess_raw_and_normalize(adata, use_raw=True, target_sum=1e4):
+    """
+    Preprocess an AnnData object by optionally restoring `.raw`, 
+    normalizing total counts, and applying log1p transformation.
+
+    This function is safe and self-contained: it always works on a copy
+    of the input AnnData object and therefore does not modify the original.
+
+    Parameters
+    ----------
+    adata : AnnData
+        The input AnnData object to preprocess.
+    use_raw : bool, optional (default: True)
+        If True and `adata.raw` exists, the `.raw` stored data 
+        is restored via `adata.raw.to_adata()` before normalization.
+        If False, the existing `.X` matrix is used as-is.
+    target_sum : float, optional (default: 1e4)
+        Target sum of total counts per cell for `sc.pp.normalize_total`.
+
+    Returns
+    -------
+    AnnData
+        A processed AnnData object with:
+        - raw restored (if available and `use_raw=True`)
+        - normalized counts (`sc.pp.normalize_total`)
+        - log1p-transformed values (`sc.pp.log1p`)
+    """
+    adata = adata.copy()
+
+    if use_raw and adata.raw is not None:
+        adata = adata.raw.to_adata()
+
+    sc.pp.normalize_total(adata, target_sum=target_sum)
+    sc.pp.log1p(adata)
+
+    return adata
+
 
 def run_scanpy_basic_pipeline(
         adata,
@@ -57,7 +95,8 @@ def run_scanpy_basic_pipeline(
         >>> # Visualize the results
         >>> sc.pl.umap(adata_processed, color='leiden')
     """
-
+    from ..utils.logging import setup_logger
+    
     if logger is None:
         logger = setup_logger()
 

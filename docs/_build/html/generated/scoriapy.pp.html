@@ -6,16 +6,16 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>scoriapy.pp &mdash; ScoriaPy 0.0.0 documentation</title>
+  <title>scoriapy.pp package &mdash; ScoriaPy 0.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../_static/documentation_options.js?v=7026087e"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
@@ -58,7 +58,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">scoriapy.pp</li>
+      <li class="breadcrumb-item active">scoriapy.pp package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/generated/scoriapy.pp.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -68,8 +68,130 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-scoriapy.pp">
-<span id="scoriapy-pp"></span><h1>scoriapy.pp<a class="headerlink" href="#module-scoriapy.pp" title="Link to this heading"></a></h1>
+  <section id="scoriapy-pp-package">
+<h1>scoriapy.pp package<a class="headerlink" href="#scoriapy-pp-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-scoriapy.pp.hvg">
+<span id="scoriapy-pp-hvg-module"></span><h2>scoriapy.pp.hvg module<a class="headerlink" href="#module-scoriapy.pp.hvg" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.pp.hvg.run_hvg">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.pp.hvg.</span></span><span class="sig-name descname"><span class="pre">run_hvg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_top</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flavor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'seurat'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.pp.hvg.run_hvg" title="Link to this definition"></a></dt>
+<dd><p>Compute and subset highly variable genes (HVGs).</p>
+<p>This is a thin wrapper around <code class="xref py py-func docutils literal notranslate"><span class="pre">scanpy.pp.highly_variable_genes()</span></code> that
+logs progress and returns a view restricted to the selected genes. If the
+data has not been log-transformed yet (i.e. <code class="docutils literal notranslate"><span class="pre">&quot;log1p&quot;</span></code> is not present in
+<code class="docutils literal notranslate"><span class="pre">adata.uns</span></code>), a <code class="docutils literal notranslate"><span class="pre">log1p</span></code> transform is applied before selecting HVGs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> – Input AnnData object.</p></li>
+<li><p><strong>n_top</strong> (<em>int</em>) – Number of highly variable genes to keep.</p></li>
+<li><p><strong>flavor</strong> (<em>str</em>) – HVG selection flavor passed to Scanpy (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;seurat&quot;</span></code>).</p></li>
+<li><p><strong>log</strong> – Optional <code class="xref py py-class docutils literal notranslate"><span class="pre">logging.Logger</span></code> instance. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, a default
+scoriapy logger is created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Copy of <code class="docutils literal notranslate"><span class="pre">adata</span></code> restricted to the selected HVGs.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>AnnData</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.pp.hvg.setup_logger">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.pp.hvg.</span></span><span class="sig-name descname"><span class="pre">setup_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.pp.hvg.setup_logger" title="Link to this definition"></a></dt>
+<dd><p>Create and configure a logger for Scanpy processing pipelines.</p>
+<p>This logger:
+- prints messages to the console with timestamps
+- optionally writes logs to a file
+- avoids duplicate handlers (important in Jupyter notebooks)
+- supports adjustable log levels (INFO, DEBUG, WARNING, etc.)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>log_file</strong> (<em>str</em><em> or </em><em>None</em><em>, </em><em>optional</em><em> (</em><em>default: None</em><em>)</em>) – If provided, log messages are also written to this file.
+If None, only console output is produced.</p></li>
+<li><p><strong>level</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>default: logging.INFO</em><em>)</em>) – Logging verbosity level. Typically one of:
+- logging.DEBUG
+- logging.INFO
+- logging.WARNING
+- logging.ERROR
+- logging.CRITICAL</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>logger</strong> – A configured logger instance that can be passed to functions
+(e.g., preprocessing pipelines) to produce timestamped logs.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>logging.Logger</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Inside Jupyter notebooks, calling this function repeatedly will not
+produce duplicate log messages because the logger only adds handlers
+the first time it is constructed.</p>
+<p class="rubric">Examples</p>
+<p>Basic usage:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span> <span class="o">=</span> <span class="n">setup_logger</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting preprocessing...&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Logging to both console and file:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span> <span class="o">=</span> <span class="n">setup_logger</span><span class="p">(</span><span class="s2">&quot;scanpy_run.log&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Running HVG selection...&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Using inside a Scanpy pipeline:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span> <span class="o">=</span> <span class="n">setup_logger</span><span class="p">(</span><span class="s2">&quot;fibro_preprocess.log&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">adata</span> <span class="o">=</span> <span class="n">run_scanpy_basic_pipeline</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="n">logger</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Pipeline finished.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Changing verbosity:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span> <span class="o">=</span> <span class="n">setup_logger</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Debug-level message for troubleshooting.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-scoriapy.pp">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-scoriapy.pp" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.pp.preprocess_raw_and_normalize">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.pp.</span></span><span class="sig-name descname"><span class="pre">preprocess_raw_and_normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_raw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_sum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10000.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.pp.preprocess_raw_and_normalize" title="Link to this definition"></a></dt>
+<dd><p>Preprocess an AnnData object by optionally restoring <cite>.raw</cite>,
+normalizing total counts, and applying log1p transformation.</p>
+<p>This function is safe and self-contained: it always works on a copy
+of the input AnnData object and therefore does not modify the original.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> (<em>AnnData</em>) – The input AnnData object to preprocess.</p></li>
+<li><p><strong>use_raw</strong> (<em>bool</em><em>, </em><em>optional</em><em> (</em><em>default: True</em><em>)</em>) – If True and <cite>adata.raw</cite> exists, the <cite>.raw</cite> stored data
+is restored via <cite>adata.raw.to_adata()</cite> before normalization.
+If False, the existing <cite>.X</cite> matrix is used as-is.</p></li>
+<li><p><strong>target_sum</strong> (<em>float</em><em>, </em><em>optional</em><em> (</em><em>default: 1e4</em><em>)</em>) – Target sum of total counts per cell for <cite>sc.pp.normalize_total</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A processed AnnData object with:
+- raw restored (if available and <cite>use_raw=True</cite>)
+- normalized counts (<cite>sc.pp.normalize_total</cite>)
+- log1p-transformed values (<cite>sc.pp.log1p</cite>)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>AnnData</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="scoriapy.pp.read_10x_h5_concat">
 <span class="sig-prename descclassname"><span class="pre">scoriapy.pp.</span></span><span class="sig-name descname"><span class="pre">read_10x_h5_concat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.pp.read_10x_h5_concat" title="Link to this definition"></a></dt>
@@ -118,7 +240,9 @@ and can be joined later if needed).</p></li>
 <span class="sig-prename descclassname"><span class="pre">scoriapy.pp.</span></span><span class="sig-name descname"><span class="pre">run_hvg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_top</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flavor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'seurat'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.pp.run_hvg" title="Link to this definition"></a></dt>
 <dd><p>Compute and subset highly variable genes (HVGs).</p>
 <p>This is a thin wrapper around <code class="xref py py-func docutils literal notranslate"><span class="pre">scanpy.pp.highly_variable_genes()</span></code> that
-logs progress and returns a view restricted to the selected genes.</p>
+logs progress and returns a view restricted to the selected genes. If the
+data has not been log-transformed yet (i.e. <code class="docutils literal notranslate"><span class="pre">&quot;log1p&quot;</span></code> is not present in
+<code class="docutils literal notranslate"><span class="pre">adata.uns</span></code>), a <code class="docutils literal notranslate"><span class="pre">log1p</span></code> transform is applied before selecting HVGs.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -138,6 +262,57 @@ scoriapy logger is created.</p></li>
 </dl>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.pp.run_scanpy_basic_pipeline">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.pp.</span></span><span class="sig-name descname"><span class="pre">run_scanpy_basic_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_top_genes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_pcs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_neighbors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hvg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.pp.run_scanpy_basic_pipeline" title="Link to this definition"></a></dt>
+<dd><p>Run standard Scanpy preprocessing with logging at each step:
+HVG → scale → PCA → neighbors → UMAP → Leiden.</p>
+<p>This pipeline automates the transition from raw/normalized counts to a
+clustered embedding. It handles high-variable gene selection, data scaling
+to unit variance, dimensionality reduction via PCA, and manifold learning
+(UMAP/Leiden).</p>
+<dl>
+<dt>Args:</dt><dd><p>adata (AnnData): Annotated data matrix (typically normalized and log-transformed).
+n_top_genes (int): Number of highly variable genes to keep. Default is 2000.
+n_pcs (int): Number of principal components to compute and use for neighbors.
+n_neighbors (int): Size of the local neighborhood for the KNN graph.
+resolution (float): Resolution parameter for Leiden clustering (higher = more clusters).
+hvg (bool): If True, subsets the object to highly variable genes.
+scale (bool): If True, scales data to unit variance and zero mean.
+copy (bool): If True, returns a new AnnData object; otherwise modifies in-place.
+logger (logging.Logger, optional): Logger object for progress tracking.</p>
+<blockquote>
+<div><p>If None, calls setup_logger().</p>
+</div></blockquote>
+</dd>
+<dt>Returns:</dt><dd><p>AnnData: The processed AnnData object with PCA, UMAP, and Leiden results.</p>
+</dd>
+<dt>Example:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">scanpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sc</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Load raw data and perform basic normalization</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">adata</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">pbmc3k</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">filter_cells</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">min_genes</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">filter_genes</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">min_cells</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">normalize_total</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">target_sum</span><span class="o">=</span><span class="mf">1e4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">log1p</span><span class="p">(</span><span class="n">adata</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Run the automated pipeline</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span> <span class="o">=</span> <span class="n">setup_logger</span><span class="p">(</span><span class="s2">&quot;preprocess.log&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">adata_processed</span> <span class="o">=</span> <span class="n">run_scanpy_basic_pipeline</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">adata</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">logger</span><span class="o">=</span><span class="n">logger</span>
+<span class="gp">... </span>    <span class="n">n_top_genes</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">resolution</span><span class="o">=</span><span class="mf">0.8</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Visualize the results</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">umap</span><span class="p">(</span><span class="n">adata_processed</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;leiden&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 </section>
 
 
@@ -148,7 +323,7 @@ scoriapy logger is created.</p></li>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2025, ScoriaPy contributors.</p>
+    <p>&#169; Copyright 2026, ScoriaPy contributors.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

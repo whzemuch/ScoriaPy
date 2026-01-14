@@ -13,7 +13,7 @@ import numpy as np
 import scanpy as sc
 
 
-def plot_umap_by_categories(
+def plot_umap_by_categories_v1(
     adata,
     obs_columns: Sequence[str],
     basis: str = "X_umap",

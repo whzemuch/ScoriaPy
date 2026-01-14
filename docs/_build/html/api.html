@@ -8,14 +8,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>API reference &mdash; ScoriaPy 0.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=7026087e"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -44,9 +44,11 @@
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#module-scoriapy.pp">Preprocessing (<code class="xref py py-mod docutils literal notranslate"><span class="pre">scoriapy.pp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#scoriapy.pp.preprocess_raw_and_normalize"><code class="docutils literal notranslate"><span class="pre">preprocess_raw_and_normalize()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.pp.read_10x_h5_concat"><code class="docutils literal notranslate"><span class="pre">read_10x_h5_concat()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.pp.read_10x_mtx_concat"><code class="docutils literal notranslate"><span class="pre">read_10x_mtx_concat()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.pp.run_hvg"><code class="docutils literal notranslate"><span class="pre">run_hvg()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scoriapy.pp.run_scanpy_basic_pipeline"><code class="docutils literal notranslate"><span class="pre">run_scanpy_basic_pipeline()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#module-scoriapy.tl">Analysis tools (<code class="xref py py-mod docutils literal notranslate"><span class="pre">scoriapy.tl</span></code>)</a><ul>
@@ -62,11 +64,15 @@
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.tl.get_de_genes"><code class="docutils literal notranslate"><span class="pre">get_de_genes()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.tl.get_deg_df"><code class="docutils literal notranslate"><span class="pre">get_deg_df()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.tl.get_pairwise_deg"><code class="docutils literal notranslate"><span class="pre">get_pairwise_deg()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scoriapy.tl.run_anova_with_posthoc"><code class="docutils literal notranslate"><span class="pre">run_anova_with_posthoc()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.tl.run_rank_genes_groups"><code class="docutils literal notranslate"><span class="pre">run_rank_genes_groups()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scoriapy.tl.run_resolution_sweep_parallel"><code class="docutils literal notranslate"><span class="pre">run_resolution_sweep_parallel()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scoriapy.tl.subset_and_clean_adata"><code class="docutils literal notranslate"><span class="pre">subset_and_clean_adata()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.tl.summarize_category_distribution"><code class="docutils literal notranslate"><span class="pre">summarize_category_distribution()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#module-scoriapy.pl">Plotting (<code class="xref py py-mod docutils literal notranslate"><span class="pre">scoriapy.pl</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#scoriapy.pl.add_ncells_annotation"><code class="docutils literal notranslate"><span class="pre">add_ncells_annotation()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.pl.add_text_labels"><code class="docutils literal notranslate"><span class="pre">add_text_labels()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.pl.calculate_median_position"><code class="docutils literal notranslate"><span class="pre">calculate_median_position()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.pl.create_heatmap_annotation"><code class="docutils literal notranslate"><span class="pre">create_heatmap_annotation()</span></code></a></li>
@@ -77,15 +83,23 @@
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.pl.plot_group_embeddings"><code class="docutils literal notranslate"><span class="pre">plot_group_embeddings()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.pl.plot_pca_for_samples"><code class="docutils literal notranslate"><span class="pre">plot_pca_for_samples()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.pl.plot_umap_by_categories"><code class="docutils literal notranslate"><span class="pre">plot_umap_by_categories()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scoriapy.pl.plot_umap_by_categories_v1"><code class="docutils literal notranslate"><span class="pre">plot_umap_by_categories_v1()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.pl.plot_umap_by_group"><code class="docutils literal notranslate"><span class="pre">plot_umap_by_group()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.pl.plot_umap_grid_by_sample"><code class="docutils literal notranslate"><span class="pre">plot_umap_grid_by_sample()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.pl.plot_umap_param_grid"><code class="docutils literal notranslate"><span class="pre">plot_umap_param_grid()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.pl.plot_violin_genes"><code class="docutils literal notranslate"><span class="pre">plot_violin_genes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scoriapy.pl.preserve_leiden_categories"><code class="docutils literal notranslate"><span class="pre">preserve_leiden_categories()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.pl.sort_cells_by_metadata"><code class="docutils literal notranslate"><span class="pre">sort_cells_by_metadata()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.pl.subset_adata"><code class="docutils literal notranslate"><span class="pre">subset_adata()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#module-scoriapy.utils">Utilities (<code class="xref py py-mod docutils literal notranslate"><span class="pre">scoriapy.utils</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#scoriapy.utils.FigureRegistry"><code class="docutils literal notranslate"><span class="pre">FigureRegistry</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#scoriapy.utils.FigureRegistry.add"><code class="docutils literal notranslate"><span class="pre">FigureRegistry.add()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#scoriapy.utils.FigureRegistry.save_all"><code class="docutils literal notranslate"><span class="pre">FigureRegistry.save_all()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#scoriapy.utils.FigureRegistry.show"><code class="docutils literal notranslate"><span class="pre">FigureRegistry.show()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.utils.confirm_and_set_colors"><code class="docutils literal notranslate"><span class="pre">confirm_and_set_colors()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.utils.create_cell_mask"><code class="docutils literal notranslate"><span class="pre">create_cell_mask()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.utils.display_colors"><code class="docutils literal notranslate"><span class="pre">display_colors()</span></code></a></li>
@@ -132,10 +146,39 @@
              
   <section id="api-reference">
 <h1>API reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h1>
-<p>This section documents the public API of the <code class="xref py py-mod docutils literal notranslate"><span class="pre">scoriapy</span></code> package.
+<p>This section documents the public API of the <a class="reference internal" href="generated/scoriapy.html#module-scoriapy" title="scoriapy"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scoriapy</span></code></a> package.
 The modules below are organized following the Scanpy convention.</p>
 <section id="module-scoriapy.pp">
 <span id="preprocessing-scoriapy-pp"></span><h2>Preprocessing (<a class="reference internal" href="generated/scoriapy.pp.html#module-scoriapy.pp" title="scoriapy.pp"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scoriapy.pp</span></code></a>)<a class="headerlink" href="#module-scoriapy.pp" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.pp.preprocess_raw_and_normalize">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.pp.</span></span><span class="sig-name descname"><span class="pre">preprocess_raw_and_normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_raw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_sum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10000.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.pp.preprocess_raw_and_normalize" title="Link to this definition"></a></dt>
+<dd><p>Preprocess an AnnData object by optionally restoring <cite>.raw</cite>,
+normalizing total counts, and applying log1p transformation.</p>
+<p>This function is safe and self-contained: it always works on a copy
+of the input AnnData object and therefore does not modify the original.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> (<em>AnnData</em>) – The input AnnData object to preprocess.</p></li>
+<li><p><strong>use_raw</strong> (<em>bool</em><em>, </em><em>optional</em><em> (</em><em>default: True</em><em>)</em>) – If True and <cite>adata.raw</cite> exists, the <cite>.raw</cite> stored data
+is restored via <cite>adata.raw.to_adata()</cite> before normalization.
+If False, the existing <cite>.X</cite> matrix is used as-is.</p></li>
+<li><p><strong>target_sum</strong> (<em>float</em><em>, </em><em>optional</em><em> (</em><em>default: 1e4</em><em>)</em>) – Target sum of total counts per cell for <cite>sc.pp.normalize_total</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A processed AnnData object with:
+- raw restored (if available and <cite>use_raw=True</cite>)
+- normalized counts (<cite>sc.pp.normalize_total</cite>)
+- log1p-transformed values (<cite>sc.pp.log1p</cite>)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>AnnData</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="scoriapy.pp.read_10x_h5_concat">
 <span class="sig-prename descclassname"><span class="pre">scoriapy.pp.</span></span><span class="sig-name descname"><span class="pre">read_10x_h5_concat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.pp.read_10x_h5_concat" title="Link to this definition"></a></dt>
@@ -184,7 +227,9 @@ and can be joined later if needed).</p></li>
 <span class="sig-prename descclassname"><span class="pre">scoriapy.pp.</span></span><span class="sig-name descname"><span class="pre">run_hvg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_top</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flavor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'seurat'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.pp.run_hvg" title="Link to this definition"></a></dt>
 <dd><p>Compute and subset highly variable genes (HVGs).</p>
 <p>This is a thin wrapper around <code class="xref py py-func docutils literal notranslate"><span class="pre">scanpy.pp.highly_variable_genes()</span></code> that
-logs progress and returns a view restricted to the selected genes.</p>
+logs progress and returns a view restricted to the selected genes. If the
+data has not been log-transformed yet (i.e. <code class="docutils literal notranslate"><span class="pre">&quot;log1p&quot;</span></code> is not present in
+<code class="docutils literal notranslate"><span class="pre">adata.uns</span></code>), a <code class="docutils literal notranslate"><span class="pre">log1p</span></code> transform is applied before selecting HVGs.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -200,6 +245,56 @@ scoriapy logger is created.</p></li>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>AnnData</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.pp.run_scanpy_basic_pipeline">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.pp.</span></span><span class="sig-name descname"><span class="pre">run_scanpy_basic_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_top_genes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_pcs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_neighbors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hvg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.pp.run_scanpy_basic_pipeline" title="Link to this definition"></a></dt>
+<dd><p>Run standard Scanpy preprocessing with logging at each step:
+HVG → scale → PCA → neighbors → UMAP → Leiden.</p>
+<p>This pipeline automates the transition from raw/normalized counts to a
+clustered embedding. It handles high-variable gene selection, data scaling
+to unit variance, dimensionality reduction via PCA, and manifold learning
+(UMAP/Leiden).</p>
+<dl>
+<dt>Args:</dt><dd><p>adata (AnnData): Annotated data matrix (typically normalized and log-transformed).
+n_top_genes (int): Number of highly variable genes to keep. Default is 2000.
+n_pcs (int): Number of principal components to compute and use for neighbors.
+n_neighbors (int): Size of the local neighborhood for the KNN graph.
+resolution (float): Resolution parameter for Leiden clustering (higher = more clusters).
+hvg (bool): If True, subsets the object to highly variable genes.
+scale (bool): If True, scales data to unit variance and zero mean.
+copy (bool): If True, returns a new AnnData object; otherwise modifies in-place.
+logger (logging.Logger, optional): Logger object for progress tracking.</p>
+<blockquote>
+<div><p>If None, calls setup_logger().</p>
+</div></blockquote>
+</dd>
+<dt>Returns:</dt><dd><p>AnnData: The processed AnnData object with PCA, UMAP, and Leiden results.</p>
+</dd>
+<dt>Example:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">scanpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sc</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Load raw data and perform basic normalization</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">adata</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">pbmc3k</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">filter_cells</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">min_genes</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">filter_genes</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">min_cells</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">normalize_total</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">target_sum</span><span class="o">=</span><span class="mf">1e4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">log1p</span><span class="p">(</span><span class="n">adata</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Run the automated pipeline</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span> <span class="o">=</span> <span class="n">setup_logger</span><span class="p">(</span><span class="s2">&quot;preprocess.log&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">adata_processed</span> <span class="o">=</span> <span class="n">run_scanpy_basic_pipeline</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">adata</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">logger</span><span class="o">=</span><span class="n">logger</span>
+<span class="gp">... </span>    <span class="n">n_top_genes</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">resolution</span><span class="o">=</span><span class="mf">0.8</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Visualize the results</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">umap</span><span class="p">(</span><span class="n">adata_processed</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;leiden&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd>
 </dl>
 </dd></dl>
@@ -470,6 +565,32 @@ the implementation but kept for API compatibility).</p></li>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.tl.run_anova_with_posthoc">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.tl.</span></span><span class="sig-name descname"><span class="pre">run_anova_with_posthoc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iv</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.tl.run_anova_with_posthoc" title="Link to this definition"></a></dt>
+<dd><p>Performs a standard statistical pipeline: Levene’s Test for homogeneity
+of variance, Type II ANOVA, and Tukey’s HSD post-hoc test.</p>
+<dl>
+<dt>Args:</dt><dd><p>df (pd.DataFrame): The dataset containing the data.
+dv (str): The column name of the dependent variable (continuous).
+iv (str): The column name of the independent variable (categorical).</p>
+</dd>
+<dt>Returns:</dt><dd><p>pd.DataFrame: A dataframe containing Tukey HSD pairwise comparisons
+augmented with ANOVA and Levene test p-values.</p>
+</dd>
+<dt>Example:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s1">&#39;diet&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="s1">&#39;weight_loss&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">... </span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">results</span> <span class="o">=</span> <span class="n">analyze_variance_pipeline</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">dv</span><span class="o">=</span><span class="s1">&#39;weight_loss&#39;</span><span class="p">,</span> <span class="n">iv</span><span class="o">=</span><span class="s1">&#39;diet&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="scoriapy.tl.run_rank_genes_groups">
 <span class="sig-prename descclassname"><span class="pre">scoriapy.tl.</span></span><span class="sig-name descname"><span class="pre">run_rank_genes_groups</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groupby_attribute</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.tl.run_rank_genes_groups" title="Link to this definition"></a></dt>
 <dd><p>Run <code class="xref py py-func docutils literal notranslate"><span class="pre">scanpy.tl.rank_genes_groups()</span></code> and plot the result.</p>
@@ -486,6 +607,77 @@ the implementation but kept for API compatibility).</p></li>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.tl.run_resolution_sweep_parallel">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.tl.</span></span><span class="sig-name descname"><span class="pre">run_resolution_sweep_parallel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolutions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.2,</span> <span class="pre">0.4,</span> <span class="pre">0.6,</span> <span class="pre">0.8,</span> <span class="pre">1.0]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.tl.run_resolution_sweep_parallel" title="Link to this definition"></a></dt>
+<dd><p>Perform a parallelized Leiden clustering sweep across multiple resolutions.</p>
+<p>This function utilizes multi-core processing to accelerate the computation of
+multiple clustering resolutions. It uses the 2026 standard ‘igraph’ flavor
+to ensure performance and compatibility. Each resolution is stored as a
+new column in <cite>adata.obs</cite>.</p>
+<dl>
+<dt>Args:</dt><dd><dl class="simple">
+<dt>adata (AnnData): Annotated data matrix. Must have a neighbors graph</dt><dd><p>pre-computed in <cite>.obsp[‘connectivities’]</cite>.</p>
+</dd>
+<dt>resolutions (list of float): Resolutions to evaluate.</dt><dd><p>Default is [0.2, 0.4, 0.6, 0.8, 1.0].</p>
+</dd>
+</dl>
+<p>n_jobs (int): Number of CPU cores to use. -1 uses all available processors.</p>
+</dd>
+<dt>Returns:</dt><dd><p>AnnData: The input object with added columns in <cite>.obs</cite> (e.g., ‘leiden_0.2’).</p>
+</dd>
+<dt>Example:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">scanpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sc</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">adata</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">pbmc3k_processed</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Ensure neighbors are computed</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">neighbors</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_pcs</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Run parallel sweep</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">resolutions</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">adata</span> <span class="o">=</span> <span class="n">run_resolution_sweep_parallel</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">resolutions</span><span class="o">=</span><span class="n">resolutions</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Visualize one of the results</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">umap</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;leiden_0.5&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.tl.subset_and_clean_adata">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.tl.</span></span><span class="sig-name descname"><span class="pre">subset_and_clean_adata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs_col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keys</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.tl.subset_and_clean_adata" title="Link to this definition"></a></dt>
+<dd><p>Extract a subset of cells from an AnnData object and clean categorical metadata.</p>
+<p>This function filters the input AnnData by one or more keys in a specified
+<code class="docutils literal notranslate"><span class="pre">.obs</span></code> column. It automatically removes unused categories from all
+categorical columns in the resulting subset to prevent downstream errors
+during aggregation (e.g., PyDESeq2 or pseudobulking) and plotting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> (<em>AnnData</em>) – The input AnnData object to be subsetted.</p></li>
+<li><p><strong>obs_col</strong> (<em>str</em>) – The column name in <code class="docutils literal notranslate"><span class="pre">adata.obs</span></code> used for filtering (e.g., ‘cluster_name’).</p></li>
+<li><p><strong>keys</strong> (<em>str</em><em> | </em><em>List</em><em>[</em><em>str</em><em>]</em>) – A single string or a list of strings representing the categories to keep.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A copied subset of the original AnnData containing only the specified cells.
+Returns <code class="docutils literal notranslate"><span class="pre">None</span></code> if no cells match the provided keys.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[AnnData]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <code class="docutils literal notranslate"><span class="pre">obs_col</span></code> is not found in <code class="docutils literal notranslate"><span class="pre">adata.obs</span></code>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Extract a single cell type</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">myo_adata</span> <span class="o">=</span> <span class="n">extract_cell_cluster_pro</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="s2">&quot;cluster_name&quot;</span><span class="p">,</span> <span class="s2">&quot;Myo&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Combine multiple cluster IDs into one subset</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">epi_adata</span> <span class="o">=</span> <span class="n">extract_cell_cluster_pro</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="s2">&quot;cluster-label&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;5&quot;</span><span class="p">,</span> <span class="s2">&quot;12&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
@@ -517,6 +709,42 @@ otherwise a styled count table with an extra <code class="docutils literal notra
 </section>
 <section id="module-scoriapy.pl">
 <span id="plotting-scoriapy-pl"></span><h2>Plotting (<a class="reference internal" href="generated/scoriapy.pl.html#module-scoriapy.pl" title="scoriapy.pl"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scoriapy.pl</span></code></a>)<a class="headerlink" href="#module-scoriapy.pl" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.pl.add_ncells_annotation">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.pl.</span></span><span class="sig-name descname"><span class="pre">add_ncells_annotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0.98,</span> <span class="pre">0.02)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fontsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'black'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bbox</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.pl.add_ncells_annotation" title="Link to this definition"></a></dt>
+<dd><p>Decorator that adds the total cell count (n = XXX) to a Scanpy plotting function.</p>
+<p>This decorator automatically extracts the observation count from the AnnData
+object and places a text annotation on the resulting axis. It forces
+<cite>show=False</cite> on the wrapped function to allow for the annotation to be
+added before the figure is displayed.</p>
+<dl>
+<dt>Args:</dt><dd><dl class="simple">
+<dt>loc (tuple): XY coordinates in axes-relative units (0 to 1).</dt><dd><p>Default is (0.98, 0.02) (bottom right).</p>
+</dd>
+</dl>
+<p>fontsize (int): Size of the annotation text.
+color (str): Color of the annotation text.
+bbox (bool): If True, adds a semi-transparent white background box</p>
+<blockquote>
+<div><p>behind the text for readability.</p>
+</div></blockquote>
+</dd>
+<dt>Returns:</dt><dd><p>function: The wrapped plotting function.</p>
+</dd>
+<dt>Example:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Standard usage as a decorator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nd">@add_ncells_annotation</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">plot_custom_umap</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">umap</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Using it directly on an existing Scanpy function</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">annotated_umap</span> <span class="o">=</span> <span class="n">add_ncells_annotation</span><span class="p">()(</span><span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">umap</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">annotated_umap</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;cell_type&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="scoriapy.pl.add_text_labels">
 <span class="sig-prename descclassname"><span class="pre">scoriapy.pl.</span></span><span class="sig-name descname"><span class="pre">add_text_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">median_positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_props_kw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.pl.add_text_labels" title="Link to this definition"></a></dt>
@@ -681,7 +909,39 @@ separate subplots.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="scoriapy.pl.plot_umap_by_categories">
-<span class="sig-prename descclassname"><span class="pre">scoriapy.pl.</span></span><span class="sig-name descname"><span class="pre">plot_umap_by_categories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs_columns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'X_umap'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'leiden'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(15,</span> <span class="pre">5)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_to_cell_mapping</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend_location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'on_data'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.pl.plot_umap_by_categories" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">scoriapy.pl.</span></span><span class="sig-name descname"><span class="pre">plot_umap_by_categories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs_columns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'X_umap'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'leiden'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(15,</span> <span class="pre">5)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_to_cell_mapping</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend_location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'on_data'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.pl.plot_umap_by_categories" title="Link to this definition"></a></dt>
+<dd><p>Plots embeddings (e.g., UMAP) for each unique combination of categories in specified columns of adata.obs,
+ensuring consistent color mapping, optional sorting, and a single global legend.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> (<em>AnnData</em>) – Annotated data matrix.</p></li>
+<li><p><strong>obs_columns</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Columns in adata.obs to group by (e.g., [“age”, “sample”]).</p></li>
+<li><p><strong>basis</strong> (<em>str</em>) – Embedding basis in adata.obsm (e.g., “umap” or “X_umap”).</p></li>
+<li><p><strong>color</strong> (<em>str</em>) – Observation column used for coloring (e.g., “leiden” or “cluster_name”).</p></li>
+<li><p><strong>ncol</strong> (<em>int</em>) – Number of columns in the subplot layout.</p></li>
+<li><p><strong>figsize</strong> (<em>tuple</em>) – Base figure size (width, height).</p></li>
+<li><p><strong>sort_order</strong> (<em>list</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Custom order for sorting subsets (e.g., [“Y”, “M”, “O”]).</p></li>
+<li><p><strong>cluster_to_cell_mapping</strong> (<em>dict</em><em>, </em><em>optional</em>) – Mapping from cluster names to cell type labels.</p></li>
+<li><p><strong>legend_location</strong> (<em>str</em>) – <dl class="simple">
+<dt>Controls legend placement:</dt><dd><ul>
+<li><p>”on_data” → Cluster labels overlaid on embedding.</p></li>
+<li><p>”right” → Individual legends on each subplot.</p></li>
+<li><p>”none” → Only a single combined legend below all subplots.</p></li>
+</ul>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>point_size</strong> (<em>float</em><em>, </em><em>optional</em>) – Point size for scatter plot. Defaults to Scanpy’s size formula.</p></li>
+<li><p><strong>return_fig</strong> (<em>bool</em>) – If True, returns (fig, axes) instead of displaying the figure.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.pl.plot_umap_by_categories_v1">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.pl.</span></span><span class="sig-name descname"><span class="pre">plot_umap_by_categories_v1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs_columns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'X_umap'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'leiden'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(15,</span> <span class="pre">5)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_to_cell_mapping</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend_location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'on_data'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.pl.plot_umap_by_categories_v1" title="Link to this definition"></a></dt>
 <dd><p>Plot UMAPs for each combination of categories in <code class="docutils literal notranslate"><span class="pre">obs_columns</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -773,6 +1033,19 @@ cell count is used.</p></li>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.pl.preserve_leiden_categories">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.pl.</span></span><span class="sig-name descname"><span class="pre">preserve_leiden_categories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata_sub</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adata_full</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">leiden_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'leiden'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.pl.preserve_leiden_categories" title="Link to this definition"></a></dt>
+<dd><p>Ensures that the leiden column in a subset AnnData object retains the full category order
+and color mapping from the original AnnData object.</p>
+<p>Parameters:
+- adata_sub: Subset AnnData object.
+- adata_full: Full AnnData object (before subsetting).
+- leiden_column: The name of the leiden clustering column in <cite>adata.obs</cite>.</p>
+<p>Returns:
+- Modified <cite>adata_sub</cite> with preserved leiden categories and color mapping.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="scoriapy.pl.sort_cells_by_metadata">
 <span class="sig-prename descclassname"><span class="pre">scoriapy.pl.</span></span><span class="sig-name descname"><span class="pre">sort_cells_by_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">primary_sort_col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">primary_categories</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">second_sort_col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">second_categories</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.pl.sort_cells_by_metadata" title="Link to this definition"></a></dt>
 <dd><p>Sort cells by two categorical obs columns.</p>
@@ -822,6 +1095,94 @@ stored in <code class="docutils literal notranslate"><span class="pre">.var['gen
 </section>
 <section id="module-scoriapy.utils">
 <span id="utilities-scoriapy-utils"></span><h2>Utilities (<a class="reference internal" href="generated/scoriapy.utils.html#module-scoriapy.utils" title="scoriapy.utils"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scoriapy.utils</span></code></a>)<a class="headerlink" href="#module-scoriapy.utils" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="scoriapy.utils.FigureRegistry">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">scoriapy.utils.</span></span><span class="sig-name descname"><span class="pre">FigureRegistry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'figures'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.utils.FigureRegistry" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A lightweight container for managing, annotating, displaying, and batch-saving matplotlib figures in Jupyter workflows.</p>
+<p>Features:
+- Tracks figures by name (and optional tags) with creation timestamps.
+- Batch-saving of all figures (e.g., as PDFs) to a chosen output folder.
+- Convenient <cite>.show()</cite> gallery for Jupyter (with names/tags above each figure).
+- Automatic rasterization of collections to control output file size.
+- Easy repr for auditing what’s stored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>output_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – Directory to save figures (default “figures”).</p></li>
+<li><p><strong>dpi</strong> (<em>int</em><em>, </em><em>optional</em>) – DPI for figure saving (default 300).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">add(name,</span> <span class="pre">fig=None,</span> <span class="pre">rasterize=True,</span> <span class="pre">tags=None):</span></span></dt>
+<dd><p>Add a figure (current or supplied) to the registry, with optional tags and rasterization.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">save_all(overwrite=True):</span></span></dt>
+<dd><p>Save all registered figures to disk (default: PDF).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">show():</span></span></dt>
+<dd><p>Display all figures in a Jupyter notebook cell
+(with labels and tags).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">list_figures():</span></span></dt>
+<dd><p>List all tracked figure names.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">__repr__():</span></span></dt>
+<dd><p>Pretty print a summary table of tracked figures.</p>
+</dd></dl>
+
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">reg</span> <span class="o">=</span> <span class="n">FigureRegistry</span><span class="p">(</span><span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;myfigs&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Add a figure</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">9</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">reg</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;parabola&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;demo&quot;</span><span class="p">,</span> <span class="s2">&quot;math&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Show all figures in Jupyter</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">reg</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Save all to PDF in &quot;myfigs&quot; directory</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">reg</span><span class="o">.</span><span class="n">save_all</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">reg</span><span class="p">)</span>
+<span class="go">Name                      | Tags                 | Created</span>
+<span class="go">----------------------------------------------------------------------</span>
+<span class="go">parabola                  | demo, math           | 2026-01-07 16:24:33</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="scoriapy.utils.FigureRegistry.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rasterize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.utils.FigureRegistry.add" title="Link to this definition"></a></dt>
+<dd><p>Add figure and metadata to container.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="scoriapy.utils.FigureRegistry.save_all">
+<span class="sig-name descname"><span class="pre">save_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.utils.FigureRegistry.save_all" title="Link to this definition"></a></dt>
+<dd><p>Saves all figures as PDFs.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="scoriapy.utils.FigureRegistry.show">
+<span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.utils.FigureRegistry.show" title="Link to this definition"></a></dt>
+<dd><p>Visual gallery for Jupyter: displays every figure with its name and tags.</p>
+</dd></dl>
+
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="scoriapy.utils.confirm_and_set_colors">
 <span class="sig-prename descclassname"><span class="pre">scoriapy.utils.</span></span><span class="sig-name descname"><span class="pre">confirm_and_set_colors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_attribute</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_map</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.utils.confirm_and_set_colors" title="Link to this definition"></a></dt>
@@ -1028,26 +1389,59 @@ target key inherits the color of its reference key.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="scoriapy.utils.setup_logger">
 <span class="sig-prename descclassname"><span class="pre">scoriapy.utils.</span></span><span class="sig-name descname"><span class="pre">setup_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.utils.setup_logger" title="Link to this definition"></a></dt>
-<dd><p>Create and configure the shared <code class="docutils literal notranslate"><span class="pre">&quot;scoriapy&quot;</span></code> logger.</p>
-<p>The logger is configured only once; subsequent calls reuse the same
-instance without adding duplicate handlers. By default, log messages are
-written to <code class="docutils literal notranslate"><span class="pre">stderr</span></code>; if <code class="docutils literal notranslate"><span class="pre">log_file</span></code> is provided, they are also written
-to a file.</p>
+<dd><p>Create and configure a logger for Scanpy processing pipelines.</p>
+<p>This logger:
+- prints messages to the console with timestamps
+- optionally writes logs to a file
+- avoids duplicate handlers (important in Jupyter notebooks)
+- supports adjustable log levels (INFO, DEBUG, WARNING, etc.)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>log_file</strong> (<em>str</em><em> | </em><em>None</em>) – Optional path to a log file. If given, a <code class="docutils literal notranslate"><span class="pre">FileHandler</span></code> is added in
-addition to the standard stream handler.</p></li>
-<li><p><strong>level</strong> – Logging level to use (e.g. <code class="docutils literal notranslate"><span class="pre">logging.INFO</span></code>).</p></li>
+<li><p><strong>log_file</strong> (<em>str</em><em> or </em><em>None</em><em>, </em><em>optional</em><em> (</em><em>default: None</em><em>)</em>) – If provided, log messages are also written to this file.
+If None, only console output is produced.</p></li>
+<li><p><strong>level</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>default: logging.INFO</em><em>)</em>) – Logging verbosity level. Typically one of:
+- logging.DEBUG
+- logging.INFO
+- logging.WARNING
+- logging.ERROR
+- logging.CRITICAL</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Configured logger instance named <code class="docutils literal notranslate"><span class="pre">&quot;scoriapy&quot;</span></code>.</p>
+<dd class="field-even"><p><strong>logger</strong> – A configured logger instance that can be passed to functions
+(e.g., preprocessing pipelines) to produce timestamped logs.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>logging.Logger</p>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p>Inside Jupyter notebooks, calling this function repeatedly will not
+produce duplicate log messages because the logger only adds handlers
+the first time it is constructed.</p>
+<p class="rubric">Examples</p>
+<p>Basic usage:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span> <span class="o">=</span> <span class="n">setup_logger</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting preprocessing...&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Logging to both console and file:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span> <span class="o">=</span> <span class="n">setup_logger</span><span class="p">(</span><span class="s2">&quot;scanpy_run.log&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Running HVG selection...&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Using inside a Scanpy pipeline:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span> <span class="o">=</span> <span class="n">setup_logger</span><span class="p">(</span><span class="s2">&quot;fibro_preprocess.log&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">adata</span> <span class="o">=</span> <span class="n">run_scanpy_basic_pipeline</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="n">logger</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Pipeline finished.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Changing verbosity:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span> <span class="o">=</span> <span class="n">setup_logger</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Debug-level message for troubleshooting.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
@@ -1124,7 +1518,7 @@ of <code class="docutils literal notranslate"><span class="pre">adata.X</span></
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2025, ScoriaPy contributors.</p>
+    <p>&#169; Copyright 2026, ScoriaPy contributors.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

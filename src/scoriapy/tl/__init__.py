@@ -1,6 +1,5 @@
 
 
-from ._pipeline_run import run_scanpy_basic_pipeline
 from ._df_anova import run_anova_with_posthoc  
 from ._umap_resolution import run_resolution_sweep_parallel
 from ._adata_subset import subset_and_clean_adata
@@ -32,7 +31,6 @@ from ._aggregate import (
 
 
 __all__ = [
-    "run_scanpy_basic_pipeline",
     "run_anova_with_posthoc",
     "run_resolution_sweep_parallel",
     "subset_and_clean_adata",

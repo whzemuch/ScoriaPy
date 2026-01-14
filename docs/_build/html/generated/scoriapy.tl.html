@@ -6,16 +6,16 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>scoriapy.tl &mdash; ScoriaPy 0.0.0 documentation</title>
+  <title>scoriapy.tl package &mdash; ScoriaPy 0.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../_static/documentation_options.js?v=7026087e"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
@@ -58,7 +58,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">scoriapy.tl</li>
+      <li class="breadcrumb-item active">scoriapy.tl package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/generated/scoriapy.tl.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -68,8 +68,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-scoriapy.tl">
-<span id="scoriapy-tl"></span><h1>scoriapy.tl<a class="headerlink" href="#module-scoriapy.tl" title="Link to this heading"></a></h1>
+  <section id="scoriapy-tl-package">
+<h1>scoriapy.tl package<a class="headerlink" href="#scoriapy-tl-package" title="Link to this heading"></a></h1>
+<section id="module-scoriapy.tl">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-scoriapy.tl" title="Link to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="scoriapy.tl.aggregate_group_expression">
 <span class="sig-prename descclassname"><span class="pre">scoriapy.tl.</span></span><span class="sig-name descname"><span class="pre">aggregate_group_expression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.tl.aggregate_group_expression" title="Link to this definition"></a></dt>
@@ -333,6 +335,32 @@ the implementation but kept for API compatibility).</p></li>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.tl.run_anova_with_posthoc">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.tl.</span></span><span class="sig-name descname"><span class="pre">run_anova_with_posthoc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iv</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.tl.run_anova_with_posthoc" title="Link to this definition"></a></dt>
+<dd><p>Performs a standard statistical pipeline: Levene’s Test for homogeneity
+of variance, Type II ANOVA, and Tukey’s HSD post-hoc test.</p>
+<dl>
+<dt>Args:</dt><dd><p>df (pd.DataFrame): The dataset containing the data.
+dv (str): The column name of the dependent variable (continuous).
+iv (str): The column name of the independent variable (categorical).</p>
+</dd>
+<dt>Returns:</dt><dd><p>pd.DataFrame: A dataframe containing Tukey HSD pairwise comparisons
+augmented with ANOVA and Levene test p-values.</p>
+</dd>
+<dt>Example:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s1">&#39;diet&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="s1">&#39;weight_loss&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">... </span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">results</span> <span class="o">=</span> <span class="n">analyze_variance_pipeline</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">dv</span><span class="o">=</span><span class="s1">&#39;weight_loss&#39;</span><span class="p">,</span> <span class="n">iv</span><span class="o">=</span><span class="s1">&#39;diet&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="scoriapy.tl.run_rank_genes_groups">
 <span class="sig-prename descclassname"><span class="pre">scoriapy.tl.</span></span><span class="sig-name descname"><span class="pre">run_rank_genes_groups</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groupby_attribute</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.tl.run_rank_genes_groups" title="Link to this definition"></a></dt>
 <dd><p>Run <code class="xref py py-func docutils literal notranslate"><span class="pre">scanpy.tl.rank_genes_groups()</span></code> and plot the result.</p>
@@ -349,6 +377,77 @@ the implementation but kept for API compatibility).</p></li>
 <dd class="field-even"><p>None</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.tl.run_resolution_sweep_parallel">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.tl.</span></span><span class="sig-name descname"><span class="pre">run_resolution_sweep_parallel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolutions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.2,</span> <span class="pre">0.4,</span> <span class="pre">0.6,</span> <span class="pre">0.8,</span> <span class="pre">1.0]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.tl.run_resolution_sweep_parallel" title="Link to this definition"></a></dt>
+<dd><p>Perform a parallelized Leiden clustering sweep across multiple resolutions.</p>
+<p>This function utilizes multi-core processing to accelerate the computation of
+multiple clustering resolutions. It uses the 2026 standard ‘igraph’ flavor
+to ensure performance and compatibility. Each resolution is stored as a
+new column in <cite>adata.obs</cite>.</p>
+<dl>
+<dt>Args:</dt><dd><dl class="simple">
+<dt>adata (AnnData): Annotated data matrix. Must have a neighbors graph</dt><dd><p>pre-computed in <cite>.obsp[‘connectivities’]</cite>.</p>
+</dd>
+<dt>resolutions (list of float): Resolutions to evaluate.</dt><dd><p>Default is [0.2, 0.4, 0.6, 0.8, 1.0].</p>
+</dd>
+</dl>
+<p>n_jobs (int): Number of CPU cores to use. -1 uses all available processors.</p>
+</dd>
+<dt>Returns:</dt><dd><p>AnnData: The input object with added columns in <cite>.obs</cite> (e.g., ‘leiden_0.2’).</p>
+</dd>
+<dt>Example:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">scanpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sc</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">adata</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">pbmc3k_processed</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Ensure neighbors are computed</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">neighbors</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_pcs</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Run parallel sweep</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">resolutions</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">adata</span> <span class="o">=</span> <span class="n">run_resolution_sweep_parallel</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">resolutions</span><span class="o">=</span><span class="n">resolutions</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Visualize one of the results</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">umap</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;leiden_0.5&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.tl.subset_and_clean_adata">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.tl.</span></span><span class="sig-name descname"><span class="pre">subset_and_clean_adata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs_col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keys</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.tl.subset_and_clean_adata" title="Link to this definition"></a></dt>
+<dd><p>Extract a subset of cells from an AnnData object and clean categorical metadata.</p>
+<p>This function filters the input AnnData by one or more keys in a specified
+<code class="docutils literal notranslate"><span class="pre">.obs</span></code> column. It automatically removes unused categories from all
+categorical columns in the resulting subset to prevent downstream errors
+during aggregation (e.g., PyDESeq2 or pseudobulking) and plotting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> (<em>AnnData</em>) – The input AnnData object to be subsetted.</p></li>
+<li><p><strong>obs_col</strong> (<em>str</em>) – The column name in <code class="docutils literal notranslate"><span class="pre">adata.obs</span></code> used for filtering (e.g., ‘cluster_name’).</p></li>
+<li><p><strong>keys</strong> (<em>str</em><em> | </em><em>List</em><em>[</em><em>str</em><em>]</em>) – A single string or a list of strings representing the categories to keep.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A copied subset of the original AnnData containing only the specified cells.
+Returns <code class="docutils literal notranslate"><span class="pre">None</span></code> if no cells match the provided keys.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[AnnData]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <code class="docutils literal notranslate"><span class="pre">obs_col</span></code> is not found in <code class="docutils literal notranslate"><span class="pre">adata.obs</span></code>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Extract a single cell type</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">myo_adata</span> <span class="o">=</span> <span class="n">extract_cell_cluster_pro</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="s2">&quot;cluster_name&quot;</span><span class="p">,</span> <span class="s2">&quot;Myo&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Combine multiple cluster IDs into one subset</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">epi_adata</span> <span class="o">=</span> <span class="n">extract_cell_cluster_pro</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="s2">&quot;cluster-label&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;5&quot;</span><span class="p">,</span> <span class="s2">&quot;12&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
@@ -378,6 +477,7 @@ otherwise a styled count table with an extra <code class="docutils literal notra
 </dd></dl>
 
 </section>
+</section>
 
 
            </div>
@@ -387,7 +487,7 @@ otherwise a styled count table with an extra <code class="docutils literal notra
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2025, ScoriaPy contributors.</p>
+    <p>&#169; Copyright 2026, ScoriaPy contributors.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

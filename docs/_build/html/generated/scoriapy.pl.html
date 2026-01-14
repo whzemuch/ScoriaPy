@@ -6,16 +6,16 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>scoriapy.pl &mdash; ScoriaPy 0.0.0 documentation</title>
+  <title>scoriapy.pl package &mdash; ScoriaPy 0.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../_static/documentation_options.js?v=7026087e"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
@@ -58,7 +58,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">scoriapy.pl</li>
+      <li class="breadcrumb-item active">scoriapy.pl package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/generated/scoriapy.pl.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -68,8 +68,46 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-scoriapy.pl">
-<span id="scoriapy-pl"></span><h1>scoriapy.pl<a class="headerlink" href="#module-scoriapy.pl" title="Link to this heading"></a></h1>
+  <section id="scoriapy-pl-package">
+<h1>scoriapy.pl package<a class="headerlink" href="#scoriapy-pl-package" title="Link to this heading"></a></h1>
+<section id="module-scoriapy.pl">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-scoriapy.pl" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.pl.add_ncells_annotation">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.pl.</span></span><span class="sig-name descname"><span class="pre">add_ncells_annotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0.98,</span> <span class="pre">0.02)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fontsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'black'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bbox</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.pl.add_ncells_annotation" title="Link to this definition"></a></dt>
+<dd><p>Decorator that adds the total cell count (n = XXX) to a Scanpy plotting function.</p>
+<p>This decorator automatically extracts the observation count from the AnnData
+object and places a text annotation on the resulting axis. It forces
+<cite>show=False</cite> on the wrapped function to allow for the annotation to be
+added before the figure is displayed.</p>
+<dl>
+<dt>Args:</dt><dd><dl class="simple">
+<dt>loc (tuple): XY coordinates in axes-relative units (0 to 1).</dt><dd><p>Default is (0.98, 0.02) (bottom right).</p>
+</dd>
+</dl>
+<p>fontsize (int): Size of the annotation text.
+color (str): Color of the annotation text.
+bbox (bool): If True, adds a semi-transparent white background box</p>
+<blockquote>
+<div><p>behind the text for readability.</p>
+</div></blockquote>
+</dd>
+<dt>Returns:</dt><dd><p>function: The wrapped plotting function.</p>
+</dd>
+<dt>Example:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Standard usage as a decorator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nd">@add_ncells_annotation</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">plot_custom_umap</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">umap</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Using it directly on an existing Scanpy function</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">annotated_umap</span> <span class="o">=</span> <span class="n">add_ncells_annotation</span><span class="p">()(</span><span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">umap</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">annotated_umap</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;cell_type&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="scoriapy.pl.add_text_labels">
 <span class="sig-prename descclassname"><span class="pre">scoriapy.pl.</span></span><span class="sig-name descname"><span class="pre">add_text_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">median_positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_props_kw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.pl.add_text_labels" title="Link to this definition"></a></dt>
@@ -234,7 +272,39 @@ separate subplots.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="scoriapy.pl.plot_umap_by_categories">
-<span class="sig-prename descclassname"><span class="pre">scoriapy.pl.</span></span><span class="sig-name descname"><span class="pre">plot_umap_by_categories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs_columns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'X_umap'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'leiden'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(15,</span> <span class="pre">5)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_to_cell_mapping</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend_location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'on_data'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.pl.plot_umap_by_categories" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">scoriapy.pl.</span></span><span class="sig-name descname"><span class="pre">plot_umap_by_categories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs_columns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'X_umap'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'leiden'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(15,</span> <span class="pre">5)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_to_cell_mapping</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend_location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'on_data'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.pl.plot_umap_by_categories" title="Link to this definition"></a></dt>
+<dd><p>Plots embeddings (e.g., UMAP) for each unique combination of categories in specified columns of adata.obs,
+ensuring consistent color mapping, optional sorting, and a single global legend.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> (<em>AnnData</em>) – Annotated data matrix.</p></li>
+<li><p><strong>obs_columns</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Columns in adata.obs to group by (e.g., [“age”, “sample”]).</p></li>
+<li><p><strong>basis</strong> (<em>str</em>) – Embedding basis in adata.obsm (e.g., “umap” or “X_umap”).</p></li>
+<li><p><strong>color</strong> (<em>str</em>) – Observation column used for coloring (e.g., “leiden” or “cluster_name”).</p></li>
+<li><p><strong>ncol</strong> (<em>int</em>) – Number of columns in the subplot layout.</p></li>
+<li><p><strong>figsize</strong> (<em>tuple</em>) – Base figure size (width, height).</p></li>
+<li><p><strong>sort_order</strong> (<em>list</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Custom order for sorting subsets (e.g., [“Y”, “M”, “O”]).</p></li>
+<li><p><strong>cluster_to_cell_mapping</strong> (<em>dict</em><em>, </em><em>optional</em>) – Mapping from cluster names to cell type labels.</p></li>
+<li><p><strong>legend_location</strong> (<em>str</em>) – <dl class="simple">
+<dt>Controls legend placement:</dt><dd><ul>
+<li><p>”on_data” → Cluster labels overlaid on embedding.</p></li>
+<li><p>”right” → Individual legends on each subplot.</p></li>
+<li><p>”none” → Only a single combined legend below all subplots.</p></li>
+</ul>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>point_size</strong> (<em>float</em><em>, </em><em>optional</em>) – Point size for scatter plot. Defaults to Scanpy’s size formula.</p></li>
+<li><p><strong>return_fig</strong> (<em>bool</em>) – If True, returns (fig, axes) instead of displaying the figure.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.pl.plot_umap_by_categories_v1">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.pl.</span></span><span class="sig-name descname"><span class="pre">plot_umap_by_categories_v1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obs_columns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'X_umap'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'leiden'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(15,</span> <span class="pre">5)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_to_cell_mapping</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legend_location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'on_data'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.pl.plot_umap_by_categories_v1" title="Link to this definition"></a></dt>
 <dd><p>Plot UMAPs for each combination of categories in <code class="docutils literal notranslate"><span class="pre">obs_columns</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -326,6 +396,19 @@ cell count is used.</p></li>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.pl.preserve_leiden_categories">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.pl.</span></span><span class="sig-name descname"><span class="pre">preserve_leiden_categories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata_sub</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adata_full</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">leiden_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'leiden'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.pl.preserve_leiden_categories" title="Link to this definition"></a></dt>
+<dd><p>Ensures that the leiden column in a subset AnnData object retains the full category order
+and color mapping from the original AnnData object.</p>
+<p>Parameters:
+- adata_sub: Subset AnnData object.
+- adata_full: Full AnnData object (before subsetting).
+- leiden_column: The name of the leiden clustering column in <cite>adata.obs</cite>.</p>
+<p>Returns:
+- Modified <cite>adata_sub</cite> with preserved leiden categories and color mapping.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="scoriapy.pl.sort_cells_by_metadata">
 <span class="sig-prename descclassname"><span class="pre">scoriapy.pl.</span></span><span class="sig-name descname"><span class="pre">sort_cells_by_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">primary_sort_col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">primary_categories</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">second_sort_col</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">second_categories</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.pl.sort_cells_by_metadata" title="Link to this definition"></a></dt>
 <dd><p>Sort cells by two categorical obs columns.</p>
@@ -373,6 +456,7 @@ stored in <code class="docutils literal notranslate"><span class="pre">.var['gen
 </dd></dl>
 
 </section>
+</section>
 
 
            </div>
@@ -382,7 +466,7 @@ stored in <code class="docutils literal notranslate"><span class="pre">.var['gen
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2025, ScoriaPy contributors.</p>
+    <p>&#169; Copyright 2026, ScoriaPy contributors.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

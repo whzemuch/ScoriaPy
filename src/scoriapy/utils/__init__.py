@@ -1,5 +1,8 @@
 from .logging import setup_logger
 from .markers import subset_by_markers
+from ._figure_registry import FigureRegistry
+
+
 from ._extract import (
     create_cell_mask,
     subset_adata_by_mask,
@@ -18,6 +21,7 @@ from ._colors import (
 )
 
 __all__ = [
+    "FigureRegistry",
     "setup_logger",
     "subset_by_markers",
     "create_cell_mask",

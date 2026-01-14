@@ -11,3 +11,27 @@ Requires-Dist: numpy
 Requires-Dist: pandas
 Requires-Dist: matplotlib
 Requires-Dist: seaborn
+Requires-Dist: jupyterlab>=4.5.0
+Requires-Dist: pycomplexheatmap>=1.8.3
+Requires-Dist: scikit-posthocs>=0.11.4
+Requires-Dist: pytest>=9.0.1
+Provides-Extra: dev
+Requires-Dist: black>=24.0.0; extra == "dev"
+
+# ScoriaPy
+
+ScoriaPy is a lightweight utility library built on top of Scanpy.
+It organizes helper functions following the Scanpy namespace design:
+
+- `scoriapy.pp` — preprocessing utilities
+- `scoriapy.tl` — tools/analysis utilities
+- `scoriapy.pl` — plotting utilities
+- `scoriapy.utils` — generic helpers (logging, markers, etc.)
+
+This package is intended for flexible, incremental development of Scanpy pipelines.
+
+## Installation
+
+```bash
+uv pip install -e .
+```
