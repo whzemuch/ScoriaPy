@@ -10,8 +10,14 @@ It organizes helper functions following the Scanpy namespace design:
 
 This package is intended for flexible, incremental development of Scanpy pipelines.
 
+## Documentation
+
+https://scoriapy.readthedocs.io/en/latest/
+
 ## Installation
 
 ```bash
-uv pip install -e .
+pip install git+https://github.com/whzemuch/scoriapy
+# upgrade later
+pip install -U git+https://github.com/whzemuch/scoriapy
 ```
