@@ -1,3 +1,18 @@
+
+
+from ._pipeline_run import run_scanpy_basic_pipeline
+from ._df_anova import run_anova_with_posthoc  
+from ._umap_resolution import run_resolution_sweep_parallel
+from ._adata_subset import subset_and_clean_adata
+
+
+from ._adata_stats import (
+    compare_cluster_phase,
+    compare_gene_expression,
+    compare_gene_expression_two,
+)
+
+
 from ._de import (
     get_pairwise_deg,
     run_rank_genes_groups,
@@ -13,13 +28,14 @@ from ._aggregate import (
     create_group_dicts,
     summarize_category_distribution,
 )
-from ._stats import (
-    compare_cluster_phase,
-    compare_gene_expression,
-    compare_gene_expression_two,
-)
+
+
 
 __all__ = [
+    "run_scanpy_basic_pipeline",
+    "run_anova_with_posthoc",
+    "run_resolution_sweep_parallel",
+    "subset_and_clean_adata",
     "get_pairwise_deg",
     "run_rank_genes_groups",
     "get_de_genes",

@@ -1,5 +1,12 @@
-from ._embedding import (
+from ._plot_utils import add_ncells_annotation
+from ._plot_embedding import (
     plot_umap_by_categories,
+    preserve_leiden_categories,
+)
+
+
+from ._embedding import (
+    plot_umap_by_categories_v1,
     calculate_median_position,
     add_text_labels,
     plot_embeddings_with_labels,
@@ -22,7 +29,10 @@ from ._gene import (
 )
 
 __all__ = [
+    "add_ncells_annotation",
     "plot_umap_by_categories",
+    "plot_umap_by_categories_v1",
+    "preserve_leiden_categories",
     "calculate_median_position",
     "add_text_labels",
     "plot_embeddings_with_labels",
