@@ -8,7 +8,7 @@ def test_plot_umap_by_categories_no_side_effects(adata_with_umap):
     ad = adata_with_umap.copy()
     obs_before = ad.obs.copy()
 
-    pl.plot_umap_by_categories(ad, obs_columns=["age"], basis="X_umap", color="leiden")
+    pl.plot_umap_by_categories_v1(ad, obs_columns=["age"], basis="X_umap", color="leiden")
 
     # Shape and obs unchanged
     assert ad.shape == adata_with_umap.shape

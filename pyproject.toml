@@ -21,7 +21,11 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-    "black>=24.0.0"
+    "black>=24.0.0",
+    "pytest",
+    "sphinx",
+    "sphinx-autodoc-typehints",
+    "sphinx-rtd-theme"
 ]
 
 [tool.setuptools]
