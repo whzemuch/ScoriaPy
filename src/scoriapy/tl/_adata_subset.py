@@ -1,5 +1,6 @@
 import scanpy as sc
 from anndata import AnnData
+import numpy as np
 from typing import Union, List
 
 
@@ -72,3 +73,61 @@ def subset_and_clean_adata(
         
     print(f"Successfully created subset for {keys} ({subset.n_obs} cells).")
     return subset
+
+
+def make_pseudobulk_adata(
+    adata,
+    cell_type,
+    cell_type_col="cluster_name",
+    groupby=("age", "sample_id"),
+    layer_name="sum",
+    make_int=True
+):
+    """
+    Create pseudobulk counts for one or more cell types using Scanpy aggregation.
+
+    Parameters
+    ----------
+    adata : AnnData
+        Single-cell AnnData.
+    cell_type : str or list[str]
+        Cell type(s) to subset (e.g. "Myo", "Fibro", or ["AV", "HS"] for Luminal).
+    cell_type_col : str
+        Column in adata.obs containing cell-type labels.
+    groupby : tuple
+        Variables to aggregate by (default: age, sample_id).
+    layer_name : str
+        Name of layer created by sc.get.aggregate (default "sum").
+    make_int : bool
+        Convert counts to int32 for DESeq2.
+
+    Returns
+    -------
+    AnnData
+        Pseudobulk AnnData with samples as rows and genes as columns.
+    """
+
+    # Allow single or multiple cell types
+    if isinstance(cell_type, (list, tuple, set)):
+        mask = adata.obs[cell_type_col].isin(cell_type)
+    else:
+        mask = adata.obs[cell_type_col] == cell_type
+
+    # Subset cells
+    adata_sub = adata[mask].copy()
+
+    # Aggregate by (age, sample_id)
+    adata_pb = sc.get.aggregate(
+        adata_sub,
+        by=list(groupby),
+        func="sum"
+    )
+
+    # Use summed counts as X
+    adata_pb.X = adata_pb.layers[layer_name]
+
+    # Convert to integer counts for DESeq2
+    if make_int:
+        adata_pb.X = adata_pb.X.astype(np.int32)
+
+    return adata_pb

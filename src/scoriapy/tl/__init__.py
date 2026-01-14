@@ -2,8 +2,10 @@
 
 from ._df_anova import run_anova_with_posthoc  
 from ._umap_resolution import run_resolution_sweep_parallel
-from ._adata_subset import subset_and_clean_adata
-
+from ._adata_subset import (
+    subset_and_clean_adata, 
+    make_pseudobulk_adata,
+)
 
 from ._adata_stats import (
     compare_cluster_phase,
@@ -31,6 +33,7 @@ from ._aggregate import (
 
 
 __all__ = [
+    "make_pseudobulk_adata",
     "run_anova_with_posthoc",
     "run_resolution_sweep_parallel",
     "subset_and_clean_adata",
