@@ -1,0 +1,84 @@
+import pandas as pd
+
+def summarize_category_distribution(
+    adata,
+    category_col,
+    group_col,
+    selected_groups=None,
+    normalize=False,
+    sort_order=None,
+    styled=True,
+):
+    """
+    Summarizes the distribution of a categorical variable across groups.
+
+    Parameters
+    ----------
+    adata : AnnData
+        Object containing category_col and group_col in `.obs`.
+    category_col : str
+        Column representing the categorical variable.
+    group_col : str or list[str]
+        Grouping column(s) in `.obs`.
+    selected_groups : list[str], optional
+        Prefixes to include in columns.
+    normalize : bool, default False
+        Normalize counts within each column (percentages).
+    sort_order : list[str], optional
+        Order for sorting groups by prefix.
+    styled : bool, default True
+        Return styled DataFrame if True, else plain DataFrame.
+
+    Returns
+    -------
+    pd.DataFrame or Styler
+    """
+
+    if isinstance(group_col, str):
+        group_col = [group_col]
+
+    df = pd.crosstab(
+        adata.obs[category_col],
+        [adata.obs[col] for col in group_col],
+        colnames=group_col,
+    )
+
+    # Flatten multiindex
+    if isinstance(df.columns, pd.MultiIndex):
+        df.columns = ['_'.join(map(str, c)) for c in df.columns]
+
+    # Filter by selected prefixes
+    if selected_groups is not None:
+        df = df[[c for c in df.columns if any(c.startswith(p) for p in selected_groups)]]
+
+    # Sort by prefix order
+    if sort_order is not None:
+        df = df[
+            sorted(
+                df.columns,
+                key=lambda x: (
+                    sort_order.index(x.split("_")[0])
+                    if x.split("_")[0] in sort_order
+                    else float("inf")
+                ),
+            )
+        ]
+
+    # Normalize or count totals
+    if normalize:
+        df = df.div(df.sum(axis=0), axis=1) * 100
+        df.loc["Total"] = df.sum(axis=0)
+        df = df.round(1)
+    else:
+        df["Total"] = df.sum(axis=1)
+
+    # Return plain DataFrame
+    if not styled:
+        return df
+
+    # Apply consistent styling
+    style = df.style
+    if normalize:
+        style = style.format("{:.1f}")
+    subset = df.columns[:-1] if not normalize else df.columns
+    return style.background_gradient(cmap="coolwarm", axis=1, subset=subset)

@@ -1,6 +1,5 @@
 import scanpy as sc
 
-
 def preprocess_raw_and_normalize(adata, use_raw=True, target_sum=1e4):
     """
     Preprocess an AnnData object by optionally restoring `.raw`, 
@@ -96,7 +95,7 @@ def run_scanpy_basic_pipeline(
         >>> sc.pl.umap(adata_processed, color='leiden')
     """
     from ..utils.logging import setup_logger
-    
+
     if logger is None:
         logger = setup_logger()
 
