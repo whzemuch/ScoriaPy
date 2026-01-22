@@ -3,7 +3,7 @@ Name: scoriapy
 Version: 0.1.0
 Summary: Convenience utilities built on top of Scanpy.
 Author: Hanzhou Wang
-Requires-Python: >=3.10
+Requires-Python: >=3.9
 Description-Content-Type: text/markdown
 Requires-Dist: scanpy
 Requires-Dist: anndata
@@ -14,9 +14,12 @@ Requires-Dist: seaborn
 Requires-Dist: jupyterlab>=4.5.0
 Requires-Dist: pycomplexheatmap>=1.8.3
 Requires-Dist: scikit-posthocs>=0.11.4
-Requires-Dist: pytest>=9.0.1
 Provides-Extra: dev
 Requires-Dist: black>=24.0.0; extra == "dev"
+Requires-Dist: pytest>=7.0; extra == "dev"
+Requires-Dist: sphinx; extra == "dev"
+Requires-Dist: sphinx-autodoc-typehints; extra == "dev"
+Requires-Dist: sphinx-rtd-theme; extra == "dev"
 
 # ScoriaPy
 
@@ -30,8 +33,14 @@ It organizes helper functions following the Scanpy namespace design:
 
 This package is intended for flexible, incremental development of Scanpy pipelines.
 
+## Documentation
+
+https://scoriapy.readthedocs.io/en/latest/
+
 ## Installation
 
 ```bash
-uv pip install -e .
+pip install git+https://github.com/whzemuch/scoriapy
+# upgrade later
+pip install -U git+https://github.com/whzemuch/scoriapy
 ```

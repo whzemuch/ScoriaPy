@@ -9,11 +9,114 @@ Most users will access these via :mod:`scoriapy.pp`.
 
 from __future__ import annotations
 
-from pathlib import Path
-from typing import Iterable, Tuple
-
-import pandas as pd
 import scanpy as sc
+import anndata as ad
+import pandas as pd
+import logging
+from pathlib import Path
+from typing import Dict, Callable, Union, Optional
+from tqdm import tqdm
+
+
+def read_and_concat(
+    sample_dict: Dict[str, Union[str, Path]],
+    process_func: Callable[[Path, str], ad.AnnData],
+    logger: Optional[logging.Logger] = None,
+    **concat_kwargs
+) -> ad.AnnData:
+    """
+    Load multiple samples using a custom processing function and concatenate them.
+
+    This orchestrator applies a user-defined loading function to each sample path 
+    in a dictionary and merges the results into a single AnnData object using 
+    the modern ``anndata.concat`` API.
+
+    Parameters
+    ----------
+    sample_dict
+        Mapping of sample names to their respective file paths.
+    process_func
+        A callable that takes (Path, str) and returns an AnnData object. 
+        Highly recommended to use ``functools.partial`` to pass extra 
+        metadata or project settings.
+    logger
+        A :class:`logging.Logger` object for progress tracking. 
+        If None, a basic console logger is initialized.
+    **concat_kwargs
+        Keyword arguments passed to :func:`anndata.concat`. 
+        Commonly used: ``join='inner'``, ``uns_merge='unique'``.
+
+    Returns
+    -------
+    ad.AnnData
+        Concatenated AnnData object with ``.obs['sample_name']`` populated.
+
+    Example
+    -------
+    >>> import pandas as pd
+    >>> import scanpy as sc
+    >>> from functools import partial
+    >>> # 1. Define metadata and sample paths
+    >>> meta = pd.DataFrame({"age": ["6m", "24m"]}, index=["S1", "S2"])
+    >>> paths = {"S1": "data/s1.h5", "S2": "data/s2.h5"}
+    >>> 
+    >>> # 2. Define a loader that requires the metadata table
+    >>> def my_loader(path, name, info_df):
+    ...     adata = sc.read_10x_h5(path)
+    ...     adata.var_names_make_unique()
+    ...     if name in info_df.index:
+    ...         for col in info_df.columns:
+    ...             adata.obs[col] = info_df.loc[name, col]
+    ...     return adata
+    >>> 
+    >>> # 3. Create a partial function to 'bake in' the metadata
+    >>> loader_with_meta = partial(my_loader, info_df=meta)
+    >>> 
+    >>> # 4. Run orchestrator
+    >>> adata = read_and_concat(paths, loader_with_meta, join="inner")
+    """
+    if logger is None:
+        logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
+        logger = logging.getLogger(__name__)
+
+    adatas = {}
+    
+    # 1. Sequential Loading with Progress Bar
+    for name, path in tqdm(sample_dict.items(), desc="Processing Samples"):
+        logger.info(f"Loading {name} from {path}")
+        
+        try:
+            # Execute the (potentially partial) function
+            adata = process_func(Path(path), name)
+            
+            # Validation check
+            if not isinstance(adata, ad.AnnData):
+                raise TypeError(f"process_func must return AnnData, got {type(adata)}")
+                
+            logger.info(f"Success: {name} ({adata.n_obs} cells)")
+            adatas[name] = adata
+            
+        except Exception as e:
+            logger.error(f"Failed to process sample '{name}': {str(e)}")
+            raise
+
+    # 2. Modern Concatenation
+    logger.info("Concatenating samples...")
+    combined = ad.concat(
+        adatas, 
+        label="sample_name", 
+        index_unique="_", 
+        **concat_kwargs
+    )
+    
+    logger.info(f"Final object: {combined.n_obs} cells x {combined.n_vars} genes.")
+    
+    return combined
+
+
+
+
+
 
 
 def read_10x_h5_concat(
