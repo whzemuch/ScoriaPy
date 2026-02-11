@@ -16,6 +16,7 @@ from ._adata_stats import (
 
 
 from ._de import (
+    run_and_store_pairwise_rg
     get_pairwise_deg,
     run_rank_genes_groups,
     get_de_genes,
@@ -53,4 +54,5 @@ __all__ = [
     "compare_gene_expression",
     "compare_gene_expression_two",
     "run_jasmine",
+    "run_and_store_pairwise_rg"
 ]

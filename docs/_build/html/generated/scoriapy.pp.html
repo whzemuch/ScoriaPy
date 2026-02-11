@@ -193,46 +193,56 @@ If False, the existing <cite>.X</cite> matrix is used as-is.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="scoriapy.pp.read_10x_h5_concat">
-<span class="sig-prename descclassname"><span class="pre">scoriapy.pp.</span></span><span class="sig-name descname"><span class="pre">read_10x_h5_concat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.pp.read_10x_h5_concat" title="Link to this definition"></a></dt>
-<dd><p>Read multiple 10x HDF5 matrices and concatenate them into one AnnData.</p>
+<dt class="sig sig-object py" id="scoriapy.pp.read_and_concat">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.pp.</span></span><span class="sig-name descname"><span class="pre">read_and_concat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">process_func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">concat_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.pp.read_and_concat" title="Link to this definition"></a></dt>
+<dd><p>Load multiple samples using a custom processing function and concatenate them.</p>
+<p>This orchestrator applies a user-defined loading function to each sample path
+in a dictionary and merges the results into a single AnnData object using
+the modern <code class="docutils literal notranslate"><span class="pre">anndata.concat</span></code> API.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>samples</strong> (<em>Iterable</em><em>[</em><em>Tuple</em><em>[</em><em>str</em><em>, </em><em>Path</em><em>]</em><em>]</em>) – Iterable of <code class="docutils literal notranslate"><span class="pre">(sample_name,</span> <span class="pre">path_to_filtered_feature_bc_matrix.h5)</span></code>.</p></li>
-<li><p><strong>sample_info</strong> (<em>DataFrame</em>) – DataFrame indexed by <code class="docutils literal notranslate"><span class="pre">sample_name</span></code> that contains at least a
-<code class="docutils literal notranslate"><span class="pre">&quot;treatment&quot;</span></code> column (additional columns are kept in the index
-and can be joined later if needed).</p></li>
+<li><p><strong>sample_dict</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em> | </em><em>Path</em><em>]</em>) – Mapping of sample names to their respective file paths.</p></li>
+<li><p><strong>process_func</strong> (<em>Callable</em><em>[</em><em>[</em><em>Path</em><em>, </em><em>str</em><em>]</em><em>, </em><em>AnnData</em><em>]</em>) – A callable that takes (Path, str) and returns an AnnData object.
+Highly recommended to use <code class="docutils literal notranslate"><span class="pre">functools.partial</span></code> to pass extra
+metadata or project settings.</p></li>
+<li><p><strong>logger</strong> (<em>Logger</em><em> | </em><em>None</em>) – A <code class="xref py py-class docutils literal notranslate"><span class="pre">logging.Logger</span></code> object for progress tracking.
+If None, a basic console logger is initialized.</p></li>
+<li><p><strong>**concat_kwargs</strong> – Keyword arguments passed to <code class="xref py py-func docutils literal notranslate"><span class="pre">anndata.concat()</span></code>.
+Commonly used: <code class="docutils literal notranslate"><span class="pre">join='inner'</span></code>, <code class="docutils literal notranslate"><span class="pre">uns_merge='unique'</span></code>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Concatenated object with <code class="docutils literal notranslate"><span class="pre">sample_name</span></code> and <code class="docutils literal notranslate"><span class="pre">treatment</span></code> in <code class="docutils literal notranslate"><span class="pre">.obs</span></code>.</p>
+<dd class="field-even"><p>Concatenated AnnData object with <code class="docutils literal notranslate"><span class="pre">.obs['sample_name']</span></code> populated.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>AnnData</p>
+<dd class="field-odd"><p>ad.AnnData</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="scoriapy.pp.read_10x_mtx_concat">
-<span class="sig-prename descclassname"><span class="pre">scoriapy.pp.</span></span><span class="sig-name descname"><span class="pre">read_10x_mtx_concat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">main_folder_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'batch'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.pp.read_10x_mtx_concat" title="Link to this definition"></a></dt>
-<dd><p>Read 10x MTX folders inside <code class="docutils literal notranslate"><span class="pre">main_folder_path</span></code> and concatenate them.</p>
-<p>Each direct subdirectory is assumed to contain a matrix in 10x MTX format.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>main_folder_path</strong> (<em>Path</em><em> | </em><em>str</em>) – Path to the main folder containing subfolders with 10x MTX data.</p></li>
-<li><p><strong>batch_key</strong> (<em>str</em>) – Name of the column in <code class="docutils literal notranslate"><span class="pre">.obs</span></code> indicating the batch/subfolder.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Concatenated object with batches annotated by <code class="docutils literal notranslate"><span class="pre">batch_key</span></code>.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>AnnData</p>
-</dd>
-</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">scanpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sc</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># 1. Define metadata and sample paths</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">meta</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;6m&quot;</span><span class="p">,</span> <span class="s2">&quot;24m&quot;</span><span class="p">]},</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;S1&quot;</span><span class="p">,</span> <span class="s2">&quot;S2&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">paths</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;S1&quot;</span><span class="p">:</span> <span class="s2">&quot;data/s1.h5&quot;</span><span class="p">,</span> <span class="s2">&quot;S2&quot;</span><span class="p">:</span> <span class="s2">&quot;data/s2.h5&quot;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># 2. Define a loader that requires the metadata table</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">my_loader</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">info_df</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">adata</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">read_10x_h5</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">adata</span><span class="o">.</span><span class="n">var_names_make_unique</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">info_df</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">info_df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+<span class="gp">... </span>            <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">info_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">name</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">adata</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># 3. Create a partial function to &#39;bake in&#39; the metadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loader_with_meta</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">my_loader</span><span class="p">,</span> <span class="n">info_df</span><span class="o">=</span><span class="n">meta</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># 4. Run orchestrator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">adata</span> <span class="o">=</span> <span class="n">read_and_concat</span><span class="p">(</span><span class="n">paths</span><span class="p">,</span> <span class="n">loader_with_meta</span><span class="p">,</span> <span class="n">join</span><span class="o">=</span><span class="s2">&quot;inner&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">

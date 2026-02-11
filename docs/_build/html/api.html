@@ -45,8 +45,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#module-scoriapy.pp">Preprocessing (<code class="xref py py-mod docutils literal notranslate"><span class="pre">scoriapy.pp</span></code>)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.pp.preprocess_raw_and_normalize"><code class="docutils literal notranslate"><span class="pre">preprocess_raw_and_normalize()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#scoriapy.pp.read_10x_h5_concat"><code class="docutils literal notranslate"><span class="pre">read_10x_h5_concat()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#scoriapy.pp.read_10x_mtx_concat"><code class="docutils literal notranslate"><span class="pre">read_10x_mtx_concat()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scoriapy.pp.read_and_concat"><code class="docutils literal notranslate"><span class="pre">read_and_concat()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.pp.run_hvg"><code class="docutils literal notranslate"><span class="pre">run_hvg()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.pp.run_scanpy_basic_pipeline"><code class="docutils literal notranslate"><span class="pre">run_scanpy_basic_pipeline()</span></code></a></li>
 </ul>
@@ -64,7 +63,9 @@
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.tl.get_de_genes"><code class="docutils literal notranslate"><span class="pre">get_de_genes()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.tl.get_deg_df"><code class="docutils literal notranslate"><span class="pre">get_deg_df()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.tl.get_pairwise_deg"><code class="docutils literal notranslate"><span class="pre">get_pairwise_deg()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scoriapy.tl.make_pseudobulk_adata"><code class="docutils literal notranslate"><span class="pre">make_pseudobulk_adata()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.tl.run_anova_with_posthoc"><code class="docutils literal notranslate"><span class="pre">run_anova_with_posthoc()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scoriapy.tl.run_jasmine"><code class="docutils literal notranslate"><span class="pre">run_jasmine()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.tl.run_rank_genes_groups"><code class="docutils literal notranslate"><span class="pre">run_rank_genes_groups()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.tl.run_resolution_sweep_parallel"><code class="docutils literal notranslate"><span class="pre">run_resolution_sweep_parallel()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scoriapy.tl.subset_and_clean_adata"><code class="docutils literal notranslate"><span class="pre">subset_and_clean_adata()</span></code></a></li>
@@ -180,46 +181,56 @@ If False, the existing <cite>.X</cite> matrix is used as-is.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="scoriapy.pp.read_10x_h5_concat">
-<span class="sig-prename descclassname"><span class="pre">scoriapy.pp.</span></span><span class="sig-name descname"><span class="pre">read_10x_h5_concat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.pp.read_10x_h5_concat" title="Link to this definition"></a></dt>
-<dd><p>Read multiple 10x HDF5 matrices and concatenate them into one AnnData.</p>
+<dt class="sig sig-object py" id="scoriapy.pp.read_and_concat">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.pp.</span></span><span class="sig-name descname"><span class="pre">read_and_concat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">process_func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">concat_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.pp.read_and_concat" title="Link to this definition"></a></dt>
+<dd><p>Load multiple samples using a custom processing function and concatenate them.</p>
+<p>This orchestrator applies a user-defined loading function to each sample path
+in a dictionary and merges the results into a single AnnData object using
+the modern <code class="docutils literal notranslate"><span class="pre">anndata.concat</span></code> API.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>samples</strong> (<em>Iterable</em><em>[</em><em>Tuple</em><em>[</em><em>str</em><em>, </em><em>Path</em><em>]</em><em>]</em>) – Iterable of <code class="docutils literal notranslate"><span class="pre">(sample_name,</span> <span class="pre">path_to_filtered_feature_bc_matrix.h5)</span></code>.</p></li>
-<li><p><strong>sample_info</strong> (<em>DataFrame</em>) – DataFrame indexed by <code class="docutils literal notranslate"><span class="pre">sample_name</span></code> that contains at least a
-<code class="docutils literal notranslate"><span class="pre">&quot;treatment&quot;</span></code> column (additional columns are kept in the index
-and can be joined later if needed).</p></li>
+<li><p><strong>sample_dict</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em> | </em><em>Path</em><em>]</em>) – Mapping of sample names to their respective file paths.</p></li>
+<li><p><strong>process_func</strong> (<em>Callable</em><em>[</em><em>[</em><em>Path</em><em>, </em><em>str</em><em>]</em><em>, </em><em>AnnData</em><em>]</em>) – A callable that takes (Path, str) and returns an AnnData object.
+Highly recommended to use <code class="docutils literal notranslate"><span class="pre">functools.partial</span></code> to pass extra
+metadata or project settings.</p></li>
+<li><p><strong>logger</strong> (<em>Logger</em><em> | </em><em>None</em>) – A <code class="xref py py-class docutils literal notranslate"><span class="pre">logging.Logger</span></code> object for progress tracking.
+If None, a basic console logger is initialized.</p></li>
+<li><p><strong>**concat_kwargs</strong> – Keyword arguments passed to <code class="xref py py-func docutils literal notranslate"><span class="pre">anndata.concat()</span></code>.
+Commonly used: <code class="docutils literal notranslate"><span class="pre">join='inner'</span></code>, <code class="docutils literal notranslate"><span class="pre">uns_merge='unique'</span></code>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Concatenated object with <code class="docutils literal notranslate"><span class="pre">sample_name</span></code> and <code class="docutils literal notranslate"><span class="pre">treatment</span></code> in <code class="docutils literal notranslate"><span class="pre">.obs</span></code>.</p>
+<dd class="field-even"><p>Concatenated AnnData object with <code class="docutils literal notranslate"><span class="pre">.obs['sample_name']</span></code> populated.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>AnnData</p>
+<dd class="field-odd"><p>ad.AnnData</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="scoriapy.pp.read_10x_mtx_concat">
-<span class="sig-prename descclassname"><span class="pre">scoriapy.pp.</span></span><span class="sig-name descname"><span class="pre">read_10x_mtx_concat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">main_folder_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'batch'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.pp.read_10x_mtx_concat" title="Link to this definition"></a></dt>
-<dd><p>Read 10x MTX folders inside <code class="docutils literal notranslate"><span class="pre">main_folder_path</span></code> and concatenate them.</p>
-<p>Each direct subdirectory is assumed to contain a matrix in 10x MTX format.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>main_folder_path</strong> (<em>Path</em><em> | </em><em>str</em>) – Path to the main folder containing subfolders with 10x MTX data.</p></li>
-<li><p><strong>batch_key</strong> (<em>str</em>) – Name of the column in <code class="docutils literal notranslate"><span class="pre">.obs</span></code> indicating the batch/subfolder.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Concatenated object with batches annotated by <code class="docutils literal notranslate"><span class="pre">batch_key</span></code>.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>AnnData</p>
-</dd>
-</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">scanpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sc</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># 1. Define metadata and sample paths</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">meta</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;6m&quot;</span><span class="p">,</span> <span class="s2">&quot;24m&quot;</span><span class="p">]},</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;S1&quot;</span><span class="p">,</span> <span class="s2">&quot;S2&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">paths</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;S1&quot;</span><span class="p">:</span> <span class="s2">&quot;data/s1.h5&quot;</span><span class="p">,</span> <span class="s2">&quot;S2&quot;</span><span class="p">:</span> <span class="s2">&quot;data/s2.h5&quot;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># 2. Define a loader that requires the metadata table</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">my_loader</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">info_df</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">adata</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">read_10x_h5</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">adata</span><span class="o">.</span><span class="n">var_names_make_unique</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">info_df</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">info_df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+<span class="gp">... </span>            <span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">info_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">name</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">adata</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># 3. Create a partial function to &#39;bake in&#39; the metadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loader_with_meta</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">my_loader</span><span class="p">,</span> <span class="n">info_df</span><span class="o">=</span><span class="n">meta</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># 4. Run orchestrator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">adata</span> <span class="o">=</span> <span class="n">read_and_concat</span><span class="p">(</span><span class="n">paths</span><span class="p">,</span> <span class="n">loader_with_meta</span><span class="p">,</span> <span class="n">join</span><span class="o">=</span><span class="s2">&quot;inner&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
@@ -565,6 +576,30 @@ the implementation but kept for API compatibility).</p></li>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.tl.make_pseudobulk_adata">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.tl.</span></span><span class="sig-name descname"><span class="pre">make_pseudobulk_adata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_type_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cluster_name'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groupby</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">('age',</span> <span class="pre">'sample_id')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sum'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">make_int</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.tl.make_pseudobulk_adata" title="Link to this definition"></a></dt>
+<dd><p>Create pseudobulk counts for one or more cell types using Scanpy aggregation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> (<em>AnnData</em>) – Single-cell AnnData.</p></li>
+<li><p><strong>cell_type</strong> (<em>str</em><em> or </em><em>list</em><em>[</em><em>str</em><em>]</em>) – Cell type(s) to subset (e.g. “Myo”, “Fibro”, or [“AV”, “HS”] for Luminal).</p></li>
+<li><p><strong>cell_type_col</strong> (<em>str</em>) – Column in adata.obs containing cell-type labels.</p></li>
+<li><p><strong>groupby</strong> (<em>tuple</em>) – Variables to aggregate by (default: age, sample_id).</p></li>
+<li><p><strong>layer_name</strong> (<em>str</em>) – Name of layer created by sc.get.aggregate (default “sum”).</p></li>
+<li><p><strong>make_int</strong> (<em>bool</em>) – Convert counts to int32 for DESeq2.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Pseudobulk AnnData with samples as rows and genes as columns.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>AnnData</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="scoriapy.tl.run_anova_with_posthoc">
 <span class="sig-prename descclassname"><span class="pre">scoriapy.tl.</span></span><span class="sig-name descname"><span class="pre">run_anova_with_posthoc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iv</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.tl.run_anova_with_posthoc" title="Link to this definition"></a></dt>
 <dd><p>Performs a standard statistical pipeline: Levene’s Test for homogeneity
@@ -588,6 +623,90 @@ augmented with ANOVA and Levene test p-values.</p>
 </div>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scoriapy.tl.run_jasmine">
+<span class="sig-prename descclassname"><span class="pre">scoriapy.tl.</span></span><span class="sig-name descname"><span class="pre">run_jasmine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">net</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'oddsratio'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_added</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'jasmine'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#scoriapy.tl.run_jasmine" title="Link to this definition"></a></dt>
+<dd><p>JASMINE multi-signature enrichment scoring for single-cell RNA-seq.</p>
+<p>This function computes a robust per-cell signature score using the
+JASMINE method, which combines:</p>
+<ol class="arabic simple">
+<li><p>Rank component (dropout-robust)
+Mean normalized rank of signature genes among expressed genes only.</p></li>
+<li><p>Enrichment component
+Odds ratio or likelihood enrichment of expressed signature genes
+relative to background genes.</p></li>
+</ol>
+<p>Final score:</p>
+<blockquote>
+<div><p>score = (rank_component + enrichment_component) / 2</p>
+</div></blockquote>
+<p>Results are stored similarly to AUCell/Scanpy scoring.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> (<em>AnnData</em>) – Expression matrix of shape (n_cells × n_genes).</p></li>
+<li><p><strong>net</strong> (<em>pandas.DataFrame</em>) – <p>Signature definition table with columns:</p>
+<blockquote>
+<div><p>source : signature name
+target : gene symbol</p>
+</div></blockquote>
+<p>Example:</p>
+<blockquote>
+<div><p>source   target
+Tcell    CD3D
+Tcell    CD3E
+Bcell    MS4A1</p>
+</div></blockquote>
+</p></li>
+<li><p><strong>layer</strong> (<em>str</em><em> or </em><em>None</em><em>, </em><em>default=None</em>) – Use adata.layers[layer] instead of adata.X.</p></li>
+<li><p><strong>method</strong> (<em>{'oddsratio'</em><em>, </em><em>'likelihood'}</em>) – Enrichment calculation.</p></li>
+<li><p><strong>key_added</strong> (<em>str</em>) – Store results in adata.obsm[key_added].</p></li>
+<li><p><strong>copy</strong> (<em>bool</em>) – Return a modified copy (True) or update in place (False).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>AnnData or None</em></p></li>
+<li><p><em>Output</em></p></li>
+<li><p><em>——</em></p></li>
+<li><p><strong>adata.obsm[key_added]</strong> (<em>pandas.DataFrame</em>) – Shape = (cells × signatures)</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<dl class="simple">
+<dt>Performance:</dt><dd><ul class="simple">
+<li><p>Sparse CSR only</p></li>
+<li><p>Numba-accelerated ranking</p></li>
+<li><p>Matrix-multiply enrichment</p></li>
+<li><p>20–100× faster than naive Python loops</p></li>
+</ul>
+</dd>
+<dt>Complexity:</dt><dd><p>O(nnz + cells × signatures)</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">scanpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sc</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">jasmine</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_jasmine</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">adata</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">pbmc3k</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">net</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+<span class="gp">... </span>    <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Tcell&quot;</span><span class="p">,</span><span class="s2">&quot;Tcell&quot;</span><span class="p">,</span><span class="s2">&quot;Bcell&quot;</span><span class="p">,</span><span class="s2">&quot;Bcell&quot;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="s2">&quot;target&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;CD3D&quot;</span><span class="p">,</span><span class="s2">&quot;CD3E&quot;</span><span class="p">,</span><span class="s2">&quot;MS4A1&quot;</span><span class="p">,</span><span class="s2">&quot;CD79A&quot;</span><span class="p">]</span>
+<span class="gp">... </span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">adata</span> <span class="o">=</span> <span class="n">run_jasmine</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">net</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">adata</span><span class="o">.</span><span class="n">obsm</span><span class="p">[</span><span class="s2">&quot;jasmine&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sc</span><span class="o">.</span><span class="n">pl</span><span class="o">.</span><span class="n">umap</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;jasmine_Tcell&quot;</span><span class="p">,</span> <span class="s2">&quot;jasmine_Bcell&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
