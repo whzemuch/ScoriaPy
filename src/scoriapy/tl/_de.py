@@ -11,7 +11,169 @@ import pandas as pd
 import scanpy as sc
 from tqdm.auto import tqdm
 
-from scoriapy.utils._extract import get_full_df
+
+def run_and_store_pairwise_rg(
+    adata,
+    groupby,
+    comparisons,
+    method="wilcoxon",
+    n_genes=20,
+    logger=None
+):
+    """
+    Run multiple pairwise differential expression (DE) comparisons using
+    Scanpy's rank_genes_groups, automatically generate plots, and store
+    results tables inside ``adata.uns``.
+
+    This is a convenience wrapper that iterates over a dictionary of
+    comparisons and performs three steps for each:
+
+    1. Compute DE with ``sc.tl.rank_genes_groups``.
+    2. Save the standard Scanpy DE plot as PDF.
+    3. Extract results into a pandas DataFrame and store it at:
+       ``adata.uns[key]["df"]``.
+
+    Logging messages are emitted to track progress and outputs.
+
+    Parameters
+    ----------
+    adata : AnnData
+        Annotated data matrix. Must contain the grouping column in
+        ``adata.obs[groupby]``.
+
+    groupby : str
+        Column name in ``adata.obs`` used for grouping cells
+        (e.g., "age", "condition", "cluster", "leiden").
+
+    comparisons : dict[str, tuple[str, str]]
+        Dictionary mapping result keys → (group, reference).
+
+        Example:
+        {
+            "OvsY": ("Old", "Young"),
+            "MvsY": ("Middle", "Young")
+        }
+
+        Each key:
+        - becomes the Scanpy result key_added
+        - names the saved plot file: ``_{key}.pdf``
+        - stores the DEG table in ``adata.uns[key]["df"]``
+
+    method : str, default="wilcoxon"
+        Statistical test for ``rank_genes_groups``.
+        Common options:
+        {"wilcoxon", "t-test", "logreg"}
+
+    n_genes : int, default=20
+        Number of top genes shown in the generated plot.
+
+    logger : logging.Logger or None, default=None
+        Logger for progress reporting. If None, uses
+        ``logging.getLogger(__name__)``.
+
+    Returns
+    -------
+    None
+        Results are stored in-place inside ``adata``:
+
+        - DEG statistics: ``adata.uns[key]`` (Scanpy native format)
+        - DataFrame table: ``adata.uns[key]["df"]``
+        - Plots saved to disk: ``rank_genes_groups_{key}.pdf``
+
+    Side Effects
+    ------------
+    Writes PDF files to the current Scanpy figure directory
+    (controlled by ``sc.settings.figdir``).
+
+    Examples
+    --------
+    Basic usage:
+
+    >>> import logging
+    >>> logging.basicConfig(level=logging.INFO)
+
+    >>> comparisons = {
+    ...     "OvsY": ("O", "Y"),
+    ...     "MvsY": ("M", "Y")
+    ... }
+
+    >>> run_and_store_pairwise_rg(
+    ...     adata,
+    ...     groupby="age",
+    ...     comparisons=comparisons,
+    ...     method="wilcoxon",
+    ...     n_genes=20
+    ... )
+
+    Access DEG table:
+
+    >>> df = adata.uns["OvsY"]["df"]
+    >>> df.head()
+
+    Notes
+    -----
+    This function is particularly useful for:
+    - automated cell-type specific DE
+    - running many contrasts reproducibly
+    - keeping plots + tables synchronized
+    - logging long Scanpy workflows
+    """
+    if logger is None:
+        logger = logging.getLogger(__name__)
+
+    logger.info("Starting pairwise rank_genes_groups")
+    logger.info("Groupby: %s | Method: %s", groupby, method)
+    logger.info("Comparisons: %s", list(comparisons.keys()))
+
+    for key, (group, ref) in comparisons.items():
+
+        logger.info("Running %s (%s vs %s)", key, group, ref)
+
+        # 1. Run DE
+        sc.tl.rank_genes_groups(
+            adata,
+            groupby=groupby,
+            groups=[group],
+            reference=ref,
+            method=method,
+            key_added=key
+        )
+
+        logger.info(
+            "Finished rank_genes_groups for %s", key
+        )
+
+        # 2. Plot
+        sc.pl.rank_genes_groups(
+            adata,
+            key=key,
+            groups=[group],
+            n_genes=n_genes,
+            show=False,
+            save=f"_{key}.pdf"
+        )
+
+        logger.info(
+            "Saved rank_genes_groups plot for %s", key
+        )
+
+        # 3. Extract and store DataFrame
+        df = sc.get.rank_genes_groups_df(
+            adata, key=key, group=group
+        )
+
+        adata.uns[key]["df"] = df
+
+        logger.info(
+            "Stored DEG table for %s (%d genes)",
+            key, df.shape[0]
+        )
+
+    logger.info("Completed all pairwise comparisons")
+
+
+
+
 
 
 def get_pairwise_deg(
@@ -182,6 +344,8 @@ def get_deg_df(
     filter_df
         DataFrame with statistics for the selected genes.
     """
+    from ..utils._extract import get_full_df
+
     sc.pp.log1p(adata)
     sc.tl.rank_genes_groups(
         adata,
