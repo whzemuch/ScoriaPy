@@ -2,6 +2,7 @@
 
 from ._df_anova import run_anova_with_posthoc  
 from ._umap_resolution import run_resolution_sweep_parallel
+from ._rank_jasmine import run_jasmine
 from ._adata_subset import (
     subset_and_clean_adata, 
     make_pseudobulk_adata,
@@ -51,4 +52,5 @@ __all__ = [
     "compare_cluster_phase",
     "compare_gene_expression",
     "compare_gene_expression_two",
+    "run_jasmine",
 ]
