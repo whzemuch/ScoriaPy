@@ -16,7 +16,7 @@ from ._adata_stats import (
 
 
 from ._de import (
-    run_and_store_pairwise_rg
+    run_and_store_pairwise_rg,
     get_pairwise_deg,
     run_rank_genes_groups,
     get_de_genes,
